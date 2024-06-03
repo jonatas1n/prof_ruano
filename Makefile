@@ -20,6 +20,7 @@ migrate:
 
 makemigrations:
 	docker exec -it $(SERVER_CONTAINER) poetry run python manage.py makemigrations
+	make fix-perms
 
 shell:
 	docker exec -it $(SERVER_CONTAINER) poetry run python manage.py shell
