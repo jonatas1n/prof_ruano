@@ -4,9 +4,6 @@ from django.db import models
 from wagtailmetadata.models import MetadataPageMixin
 from wagtail.core.fields import RichTextField, StreamField
 from wagtail.admin.edit_handlers import StreamFieldPanel, FieldPanel
-from wagtailstreamforms.blocks import WagtailFormBlock
-from candidate.models import CandidateIndexPage
-from blog.models import BlogPost
 from wagtail.core.blocks import BooleanBlock, TextBlock, StructBlock, CharBlock
 
 class LandingPage(MetadataPageMixin, Page):
@@ -49,16 +46,3 @@ class LandingPage(MetadataPageMixin, Page):
         context["candidates_url"] = candidates_url
         return context
 
-
-class SurveysPage(MetadataPageMixin, Page):
-    surveys = StreamField(
-        [
-            ("form", WagtailFormBlock()),
-        ],
-        blank=True,
-        null=True,
-    )
-
-    content_panels = Page.content_panels + [
-        StreamFieldPanel("surveys"),
-    ]

@@ -20,8 +20,6 @@ TAGGIT_CASE_INSENSITIVE = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
-WAGTAILSTREAMFORMS_ENABLE_FORM_PROCESSING = False
-
 DEFAULT_AUTO_FIELD='django.db.models.AutoField'
 
 POSTGRES_PORT = os.environ.get("POSTGRES_PORT", 5432)
@@ -37,12 +35,9 @@ POSTGRES_HOST = os.environ.get("POSTGRES_HOST")
 # Application definition
 
 INSTALLED_APPS = [
-    "wagtailstreamforms",
     "home",
     "landing",
     "search",
-    "blog",
-    "candidate",
     "wagtailfontawesome",
     "wagtailmetadata",
     "wagtail_color_panel",
@@ -79,10 +74,6 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
 ]
-
-WAGTAILSTREAMFORMS_FORM_TEMPLATES = (
-    ("home/surveys/survey.html", "Default Form Template"),
-)
 
 ROOT_URLCONF = "landing.urls"
 

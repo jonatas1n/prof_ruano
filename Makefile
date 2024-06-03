@@ -23,3 +23,6 @@ makemigrations:
 
 shell:
 	docker exec -it $(SERVER_CONTAINER) poetry run python manage.py shell
+
+fix-perms: 
+	sudo chown -R $(USER):$(USER) .
