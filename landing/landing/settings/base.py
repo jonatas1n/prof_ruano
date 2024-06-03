@@ -35,9 +35,9 @@ POSTGRES_HOST = os.environ.get("POSTGRES_HOST")
 # Application definition
 
 INSTALLED_APPS = [
+    "users",
     "home",
     "landing",
-    "users",
     "search",
     "wagtailfontawesome",
     "wagtailmetadata",
@@ -171,6 +171,8 @@ MEDIA_URL = "/media/"
 # Wagtail settings
 
 WAGTAIL_SITE_NAME = "landing"
+
+AUTH_USER_MODEL = "users.CustomUser"
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
