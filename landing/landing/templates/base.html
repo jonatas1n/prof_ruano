@@ -67,32 +67,12 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
 
-    <link rel="stylesheet" type="text/css" href="{% static 'css/side-images.css' %}">
-
-    <aside class="side-images fade-right">
-        <img src="{% static 'img/side_images/placeholder_1.png' %}">
-        <img src="{% static 'img/side_images/placeholder_2.png' %}">
-        <img src="{% static 'img/side_images/placeholder_3.png' %}">
-        <img src="{% static 'img/side_images/placeholder_4.png' %}">
-        <img src="{% static 'img/side_images/placeholder_5.png' %}">
-        <img src="{% static 'img/side_images/placeholder_6.png' %}">
-        <img src="{% static 'img/side_images/placeholder_7.png' %}">
-        <img src="{% static 'img/side_images/placeholder_8.png' %}">
-        <img src="{% static 'img/side_images/placeholder_9.png' %}">
-        <img src="{% static 'img/side_images/placeholder_10.png' %}">
-        <img src="{% static 'img/side_images/placeholder_11.png' %}">
-        <img src="{% static 'img/side_images/placeholder_12.png' %}">
-        <div class="loader"></div>
-    </aside>
     <div class="main">
         {% include 'header.html' %}
 
         {% block content %}{% endblock %}
         <div class="footer--normal">
             {% include 'footer.html' %}
-        </div>
-        <div class="footer--mobile" hidden>
-            {% include 'footer-mobile.html' %}
         </div>
     </div>
     {# Global javascript #}

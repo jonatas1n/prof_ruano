@@ -7,7 +7,7 @@ from wagtail.admin.edit_handlers import StreamFieldPanel, FieldPanel
 from wagtail.core.blocks import BooleanBlock, TextBlock, StructBlock, CharBlock
 
 class LandingPage(MetadataPageMixin, Page):
-    is_creatable = False
+    is_creatable = True
 
     heading = RichTextField(
         null=False,
@@ -27,22 +27,3 @@ class LandingPage(MetadataPageMixin, Page):
         FieldPanel("heading"),
         StreamFieldPanel("popup"),
     ]
-
-    @property
-    def blog_posts(self):
-        return BlogPost.objects.live().public().order_by("-date")[:4]
-    
-    def surveysLive(self):
-        return SurveysPage.objects.get(title="Enquete").live
-
-    def get_context(self, request):
-        context = super(LandingPage, self).get_context(request)
-        survey_url = SurveysPage.objects.get(title="Enquete").slug
-        contact_url = CandidateIndexPage.objects.first().slug
-        candidates_url = CandidateIndexPage.objects.first().slug
-
-        context["survey_url"] = survey_url
-        context["contact_url"] = contact_url
-        context["candidates_url"] = candidates_url
-        return context
-
