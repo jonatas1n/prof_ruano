@@ -4,7 +4,10 @@ attach:
 	docker exec -it $(SERVER_CONTAINER) bash
 
 up:
-	docker-compose up
+	docker-compose up -d
+
+logs:
+	docker-compose logs -f
 
 stop:
 	docker-compose stop
