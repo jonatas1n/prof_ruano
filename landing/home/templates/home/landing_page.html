@@ -9,17 +9,21 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'css/templates/home/home.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/components/popup.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/components/modal.css' %}">
 
 <main class="container">
-    {% if page.menu_top %}
+    {% if hints or lists %}
         <div class="menu-top">
-            {% for menu_item in page.menu_top %}
-                {% if menu_item.value.active %}
-                    <a class="menu-top__item" href="{{ menu_item.value.page.slug }}" class="menu-top__item active">
-                        {{ menu_item.value.title }}
-                    </a>
-                {% endif %}
-            {% endfor %}
+            {% if lists %}
+                <a class="menu-top__item" href="{{lists_slug}}">
+                    Praticar as Listas
+                </a>
+            {% endif %}
+            {% if hints %}
+                <a class="menu-top__item" onclick="openModal('hint__modal')">
+                    Bizus para prova
+                </a>
+            {% endif %}
         </div>
     {% endif %}
 
@@ -33,6 +37,28 @@
     </div>
 </main>
 
+<div class="modal" id="hint__modal">
+    <div class="modal__backdrop"></div>
+    <div class="modal__container">
+        <div class="modal__content">
+            <div class="modal__header">
+                <h3 class="modal__title">Bizus para prova</h3>
+                <button class="modal__close" onclick="closeModal('hint__modal')">
+                    <i class="fas fa-times fa-xl"></i>
+                </button>
+            </div>
+            <div class="modal__list">
+                {% for hint in hints %}
+                    <a href="{{ hint.slug }}" class="modal__item">
+                        {{ hint.title }}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="{% static 'js/component/modal.js'%}"></script>
 <script type="text/javascript" src="{% static 'js/animations/general.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/components/popup.js' %}"></script>
 

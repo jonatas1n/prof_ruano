@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static i18n wagtailcore_tags wagtailimages_tags wagtailmetadata_tags %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/templates/home/hint_page.css' %}">
+
+<main class="container">
+    <div id="hint">
+        <h3 class="hint__title"></h3>
+        <div class="hint__content">
+            <div class="hint__video"></div>
+            <div class="hint_sidebar">
+                <div class="hint__description"></div>
+                <div class="hint__buttons"></div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}
