@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static i18n wagtailcore_tags wagtailimages_tags %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/templates/questions/question_list_index.css' %}">
+
+<main class="container">
+    <div class="lists">
+        <div class="lists__header">
+            <div class="lists__title">
+                Listas
+            </div>
+            <a href="/" class="lists__back">Voltar para o início</a>
+            <div class="lists__board">
+                <div class="list">
+                    {% for list_item in lists %}
+                        <a  class="list__item">
+                            Jônatas
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

@@ -4,6 +4,15 @@ from wagtail.fields import RichTextField, StreamField
 from wagtail.admin.panels import FieldPanel
 from wagtail.blocks import BooleanBlock, TextBlock, StructBlock, CharBlock, PageChooserBlock, RichTextBlock
 
+class QuestionListIndex(Page):
+    is_creatable = False
+
+    def get_context(self, request):
+        context = super().get_context(request)
+        context["lists"] = QuestionList.objects.live()
+        context["lists"] = [1,2,3,4,5]
+        return context
+
 class QuestionList(Page):
     questions = StreamField(
         [

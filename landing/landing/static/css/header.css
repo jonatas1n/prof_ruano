@@ -1,3 +1,7 @@
+header {
+    margin-bottom: 2rem;
+}
+
 .header__content {
     padding-block: 2rem;
     display: flex;

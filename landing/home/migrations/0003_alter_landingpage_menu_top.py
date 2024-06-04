@@ -8,7 +8,7 @@ import wagtail.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('home', '0003_landingpage_menu_top'),
+        ('home', '0002_landingpage_menu_top'),
     ]
 
     operations = [
