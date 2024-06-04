@@ -11,10 +11,24 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/components/popup.css' %}">
 
 <main class="container">
-
-    <div class="heading fade-up">
+    <div class="menu-top">
+        {% for menu_item in page.menu_top %}
+            {% if menu_item.value.active %}
+                <a class="menu-top__item" href="{{ menu_item.value.page }}" class="menu-top__item active">
+                    {{ menu_item.value.title }}
+                </a>
+            {% endif %}
+        {% endfor %}
     </div>
 
+    <div class="chart">
+        <div class="chart__title">
+            Estatísticas
+        </div>
+        <div class="chart__board">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta labore optio laborum eaque neque excepturi molestiae voluptas maiores debitis repellendus possimus illum delectus animi architecto soluta, consectetur sit. Nemo libero odit quasi ab ut.
+        </div>
+    </div>
 </main>
 
 <script type="text/javascript" src="{% static 'js/animations/general.js' %}"></script>

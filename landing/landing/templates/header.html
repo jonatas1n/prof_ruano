@@ -1,9 +1,13 @@
 {% load wagtailcore_tags wagtailimages_tags navigation_tags static %}
 
 <header>
-    <div class="container fade-down">
-        <div class="header__content">
-            <a href="/" class="header__logo"><img src="{% static 'img/logo.svg' %}"></a>
+    <div class="header__content container fade-down">
+        <a href="/" class="header__logo"><img src="{% static 'img/logo.svg' %}"></a>
+        <div class="user">
+            <a href="/profile" class="user__profile">
+                reginaldinha@gmail.com
+                <i class="fas fa-user"></i>
+            </a>
         </div>
     </div>
 </header>

@@ -34,15 +34,16 @@ POSTGRES_HOST = os.environ.get("POSTGRES_HOST")
 
 # Application definition
 
+SITE_ID = 1
+
 INSTALLED_APPS = [
     "users",
     "home",
     "landing",
+    "questions",
     "search",
-    "wagtailfontawesome",
+    "wagtail",
     "wagtailmetadata",
-    "wagtail_color_panel",
-    "wagtail.contrib.modeladmin",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.embeds",
@@ -53,7 +54,7 @@ INSTALLED_APPS = [
     "wagtail.images",
     "wagtail.search",
     "wagtail.admin",
-    "wagtail.core",
+    "wagtail.contrib.search_promotions",
     "modelcluster",
     "taggit",
     "django.contrib.admin",

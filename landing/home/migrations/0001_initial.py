@@ -2,8 +2,8 @@
 
 from django.db import migrations, models
 import django.db.models.deletion
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 import wagtailmetadata.models
 
 
@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
             name='LandingPage',
             fields=[
                 ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.page')),
-                ('popup', wagtail.core.fields.StreamField([('popup', wagtail.core.blocks.StructBlock([('active', wagtail.core.blocks.BooleanBlock(label='Ativo', required=False)), ('title', wagtail.core.blocks.CharBlock(label='Título', required=False)), ('text', wagtail.core.blocks.TextBlock(label='Texto do popup', required=False))], max_num=1, required=False))], blank=True, null=True)),
+                ('popup', wagtail.fields.StreamField([('popup', wagtail.blocks.StructBlock([('active', wagtail.blocks.BooleanBlock(label='Ativo', required=False)), ('title', wagtail.blocks.CharBlock(label='Título', required=False)), ('text', wagtail.blocks.TextBlock(label='Texto do popup', required=False))], max_num=1, required=False))], blank=True, null=True)),
                 ('search_image', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.image', verbose_name='Search image')),
             ],
             options={

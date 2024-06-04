@@ -1,0 +1,17 @@
+.header__content {
+    padding-block: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: var(--secondary-color) 1px solid;
+}
+
+.user {
+    color: white;
+    font-style: italic;
+}
+
+.user a {
+    text-decoration: none;
+}
+
