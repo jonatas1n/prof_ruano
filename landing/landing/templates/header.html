@@ -4,10 +4,16 @@
     <div class="header__content container fade-down">
         <a href="/" class="header__logo"><img src="{% static 'img/logo.svg' %}"></a>
         <div class="user">
-            <a href="/profile" class="user__profile">
-                reginaldinha@gmail.com
-                <i class="fas fa-user"></i>
-            </a>
+            {% comment %} Check if the user is logged {% endcomment %}
+            {% if user.is_authenticated %}
+                <a href="/logout" class="user__profile">
+                    {{ user.email }}
+                    <i class="fas fa-user"></i>
+                </a>
+                {% if user.is_staff %}
+                    <a href="/admin" class="user__admin">Admin</a>
+                {% endif %}
+            {% endif %}
         </div>
     </div>
 </header>

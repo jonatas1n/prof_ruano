@@ -6,6 +6,10 @@ from wagtail.fields import RichTextField, StreamField
 from wagtail.blocks import BooleanBlock, TextBlock, StructBlock, CharBlock, PageChooserBlock, URLBlock
 from wagtail.admin.panels import FieldPanel
 from questions.models import QuestionList, QuestionListIndex
+
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
 class LandingPage(MetadataPageMixin, Page):
     is_creatable = False
     max_count = 1
@@ -37,6 +41,10 @@ class LandingPage(MetadataPageMixin, Page):
         context["hints"] = HintPage.objects.filter(is_active=True)
         return context
 
+    @method_decorator(login_required)
+    def serve(self, request, *args, **kwargs):
+        return super().serve(request, *args, **kwargs)
+
     content_panels = Page.content_panels + [
         FieldPanel("popup"),
     ]
@@ -53,3 +61,7 @@ class HintPage(Page):
         FieldPanel("is_active"),
         FieldPanel("link"),
     ]
+
+    @method_decorator(login_required)
+    def serve(self, request, *args, **kwargs):
+        return super().serve(request, *args, **kwargs)

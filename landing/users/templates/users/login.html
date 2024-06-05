@@ -1,0 +1,33 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{% static 'css/templates/users/login.css' %}"
+/>
+
+<main>
+  <div id="login" class="container">
+    <div class="video-container">
+      <iframe id="video"
+      src="https://www.youtube.com/embed/tgbNymZ7vqY">
+      </iframe>
+    </div>
+    <div class="login__container fade-up">
+      <h3>Login</h3>
+      <form method="post">
+        {% csrf_token %}
+        <div class="fields">
+          {{ form.as_p }}
+        </div>
+        <div class="login__buttons">
+          <a class="login__register" href="register">Cadastrar</a>
+          <button type="submit" class="login__button">Entrar</button>
+          <a class="login__forgot" href="password_reset">Esqueceu a senha?</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
+
+{% endblock %}

@@ -13,9 +13,29 @@ header {
 .user {
     color: white;
     font-style: italic;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: .5rem;
+    transition: 35s;
+}
+
+.user__admin {
+    text-align: center;
+    background-color: var(--secondary-color);
+    border-radius: .5rem;
+    padding: .5rem;
+    font-style: normal;
+}
+
+.user__admin:hover {
+    color: var(--secondary-color);
+    background-color: white;
 }
 
 .user a {
     text-decoration: none;
 }
 
+.user__profile:hover {
+    color: #862525
+}

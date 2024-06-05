@@ -4,6 +4,9 @@ from wagtail.fields import RichTextField, StreamField
 from wagtail.admin.panels import FieldPanel
 from wagtail.blocks import BooleanBlock, TextBlock, StructBlock, CharBlock, PageChooserBlock, RichTextBlock
 
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
 class QuestionListIndex(Page):
     parent_page_types = ["home.LandingPage"]
     is_creatable = False
@@ -12,6 +15,10 @@ class QuestionListIndex(Page):
         context = super().get_context(request)
         context["lists"] = QuestionList.objects.live()
         return context
+
+    @method_decorator(login_required)
+    def serve(self, request, *args, **kwargs):
+        return super().serve(request, *args, **kwargs)
 
 class QuestionList(Page):
     parent_page_types = ["questions.QuestionListIndex"]
@@ -27,6 +34,10 @@ class QuestionList(Page):
     content_panels = Page.content_panels + [
         FieldPanel("questions"),
     ]
+
+    @method_decorator(login_required)
+    def serve(self, request, *args, **kwargs):
+        return super().serve(request, *args, **kwargs)
 
 class QuestionItem(Page):
     parent_page_types = ["questions.QuestionList"]
@@ -46,3 +57,7 @@ class QuestionItem(Page):
         FieldPanel("question"),
         FieldPanel("answers"),
     ]
+
+    @method_decorator(login_required)
+    def serve(self, request, *args, **kwargs):
+        return super().serve(request, *args, **kwargs)
