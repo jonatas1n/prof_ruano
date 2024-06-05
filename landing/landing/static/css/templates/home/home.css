@@ -14,6 +14,7 @@
     border-radius: 100vmax;
     text-decoration: none;
     font-size: 1.25rem;
+    cursor: pointer;
 }
 
 .menu-top__item:hover {

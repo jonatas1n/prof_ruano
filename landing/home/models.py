@@ -62,6 +62,14 @@ class HintPage(Page):
         FieldPanel("link"),
     ]
 
+    def get_context(self, request):
+        context = super().get_context(request)
+        hint_pages = HintPage.objects.filter(is_active=True)
+        context["index"] = list(hint_pages).index(self)
+        context["prev"] = hint_pages[context["index"] - 1] if context["index"] > 0 else None
+        context["next"] = hint_pages[context["index"] + 1] if context["index"] < len(hint_pages) - 1 else None
+        return context
+
     @method_decorator(login_required)
     def serve(self, request, *args, **kwargs):
         return super().serve(request, *args, **kwargs)

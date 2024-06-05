@@ -2,13 +2,13 @@
 
 <header>
     <div class="header__content container fade-down">
-        <a href="/" class="header__logo"><img src="{% static 'img/logo.svg' %}"></a>
+        <a href="/" class="header__logo"><img alt="logo" src="{% static 'img/logo.svg' %}"></a>
         <div class="user">
-            {% comment %} Check if the user is logged {% endcomment %}
             {% if user.is_authenticated %}
                 <a href="/logout" class="user__profile">
                     {{ user.email }}
                     <i class="fas fa-user"></i>
+                    <i class="fas fa-sign-out-alt"></i>
                 </a>
                 {% if user.is_staff %}
                     <a href="/admin" class="user__admin">Admin</a>

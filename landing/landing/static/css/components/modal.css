@@ -34,6 +34,9 @@
 }
 
 .modal__content {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 1rem;
     padding: 2rem;
     color: var(--dark-bg);
 }
@@ -44,4 +47,19 @@
 
 body.modal-active {
     overflow: hidden;
+}
+
+.modal__list {
+    display: grid;
+    justify-content: space-evenly;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.modal__list a {
+    text-decoration: none;
+    background-color: var(--dark-bg);
+    color: white;
+    padding: 1rem;
+    text-align: center;
+    border-radius: 1rem;
 }

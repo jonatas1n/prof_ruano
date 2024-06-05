@@ -20,7 +20,7 @@
                 </a>
             {% endif %}
             {% if hints %}
-                <a class="menu-top__item" onclick="openModal('hint__modal')">
+                <a class="menu-top__item" onclick="openModal('#hint__modal')">
                     Bizus para prova
                 </a>
             {% endif %}
@@ -43,7 +43,7 @@
         <div class="modal__content">
             <div class="modal__header">
                 <h3 class="modal__title">Bizus para prova</h3>
-                <button class="modal__close" onclick="closeModal('hint__modal')">
+                <button class="modal__close" onclick="closeModal('#hint__modal')">
                     <i class="fas fa-times fa-xl"></i>
                 </button>
             </div>
@@ -58,7 +58,7 @@
     </div>
 </div>
 
-<script type="text/javascript" src="{% static 'js/component/modal.js'%}"></script>
+<script type="text/javascript" src="{% static 'js/components/modal.js'%}"></script>
 <script type="text/javascript" src="{% static 'js/animations/general.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/components/popup.js' %}"></script>
 

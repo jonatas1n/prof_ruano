@@ -36,6 +36,22 @@ header {
     text-decoration: none;
 }
 
+.user__profile {
+    transition: .35s;
+}
+
 .user__profile:hover {
     color: #862525
+}
+
+.user__profile:hover .fa-user {
+    display: none;
+}
+
+.user__profile .fa-sign-out-alt {
+    display: none;
+}
+
+.user__profile:hover .fa-sign-out-alt {
+    display: inline-block;
 }
