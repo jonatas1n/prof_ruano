@@ -8,6 +8,7 @@
 {% block content %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'css/templates/home/home.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/templates/home/chart.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/components/popup.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/components/modal.css' %}">
 
@@ -31,8 +32,49 @@
         <div class="chart__title fade-left">
             Estatísticas
         </div>
-        <div class="chart__board">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dicta labore optio laborum eaque neque excepturi molestiae voluptas maiores debitis repellendus possimus illum delectus animi architecto soluta, consectetur sit. Nemo libero odit quasi ab ut.
+        <div class="chart__board marked">
+            <div class="chart__item lists">
+                <div class="chart__item__title">Últimas listas</div>
+                <ul class="lists__content">
+                    <li class="list">
+                        <div class="list__date">17/06/24</div>
+                        <div class="list__grade">28/30</div>
+                    </li>
+                    <li class="list">
+                        <div class="list__date">17/06/24</div>
+                        <div class="list__grade">28/30</div>
+                    </li>
+                    <li class="list">
+                        <div class="list__date">17/06/24</div>
+                        <div class="list__grade">28/30</div>
+                    </li>
+                </ul>
+            </div>
+            <div class="chart__item time">
+                <div class="chart__item__title">Tempo médio por lista</div>
+                <div class="time__content">1:35:22s</div>
+            </div>
+            <div class="chart__item grade">
+                <div class="chart__item__title">% de acertos</div>
+                <div class="grade__content">
+                    <div class="grade__value">85%</div>
+                    <div class="grade__rate">90/120</div>
+                </div>
+            </div>
+            <div class="chart__item subjects">
+                <div class="chart__item__title">Assuntos mais errados</div>
+                <ul class="subjects__content">
+                    <li class="subject">Funções</li>
+                    <li class="subject">Geometria</li>
+                    <li class="subject">Probabilidade</li>
+                    <li class="subject">Funções</li>
+                    <li class="subject">Geometria</li>
+                    <li class="subject">Probabilidade</li>
+                    <li class="subject">Funções</li>
+                    <li class="subject">Geometria</li>
+                    <li class="subject">Probabilidade</li>
+                </ul>
+            </div>
         </div>
     </div>
 </main>

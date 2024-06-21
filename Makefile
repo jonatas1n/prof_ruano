@@ -15,6 +15,9 @@ stop:
 rm:
 	docker-compose rm
 
+install:
+	docker exec -it $(SERVER_CONTAINER) poetry install
+
 createsu:
 	docker exec -it $(SERVER_CONTAINER) poetry run python manage.py createsuperuser
 
