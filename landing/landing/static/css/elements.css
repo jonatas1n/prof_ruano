@@ -17,7 +17,7 @@ section {
 
 button {
     padding: 10px;
-    background-color: var(--dark-blue);
+    background-color: var(--secondary-color);
     color: white;
     border: none;
     border-radius: 100vmax;
@@ -111,14 +111,14 @@ caption {
 h1, h2 {color: var(--dark-blue);}
 
 h5, p {
-    font-family: 'Noto Sans';
+    font-family: 'Lato';
     font-style: normal;
     font-weight: 400;
 }
 
 h1, h2, h3, h4, button, .button-text, caption {
     margin: 0;
-    font-family: 'Noto Sans';
+    font-family: 'Lato';
     font-style: normal;
     font-weight: 700;
 }

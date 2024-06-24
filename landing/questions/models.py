@@ -1,3 +1,4 @@
+from tabnanny import verbose
 from django.db import models
 from wagtail.models import Page
 from wagtail.fields import RichTextField, StreamField
@@ -35,13 +36,17 @@ class QuestionList(Page):
         FieldPanel("questions"),
     ]
 
+    ## define the verbose name
+    class Meta:
+        verbose_name = "Lista de Questões"
+
     @method_decorator(login_required)
     def serve(self, request, *args, **kwargs):
         return super().serve(request, *args, **kwargs)
 
 class QuestionItem(Page):
-    parent_page_types = ["questions.QuestionList"]
-    question = RichTextField(max_length=255)
+    parent_page_types = ["questions.QuestionList", "questions.QuestionListIndex"]
+    question = RichTextField(max_length=255, verbose_name="Enunciado da questão")
     answers = StreamField(
         [
             (
@@ -50,13 +55,16 @@ class QuestionItem(Page):
                     ("is_correct", BooleanBlock(default=False, required=False)),
                 ])
             )
-        ], null=True, blank=True, max_num=5, min_num=2
+        ], null=True, blank=True, max_num=5, min_num=2, verbose_name="Alternativas"
     )
 
     content_panels = Page.content_panels + [
         FieldPanel("question"),
         FieldPanel("answers"),
     ]
+
+    class Meta:
+        verbose_name = "Questão"
 
     @method_decorator(login_required)
     def serve(self, request, *args, **kwargs):

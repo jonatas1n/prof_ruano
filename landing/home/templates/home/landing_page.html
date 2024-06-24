@@ -32,19 +32,19 @@
         <div class="chart__title fade-left">
             Estatísticas
         </div>
-        <div class="chart__board marked">
+        <div class="chart__board">
             <div class="chart__item lists">
-                <div class="chart__item__title">Últimas listas</div>
+                <div class="chart__item__title">Suas últimas listas</div>
                 <ul class="lists__content">
-                    <li class="list">
+                    <li class="list" id="list-item-12" data-list-id="12">
                         <div class="list__date">17/06/24</div>
                         <div class="list__grade">28/30</div>
                     </li>
-                    <li class="list">
+                    <li class="list" id="list-item-13" data-list-id="13">
                         <div class="list__date">17/06/24</div>
                         <div class="list__grade">28/30</div>
                     </li>
-                    <li class="list">
+                    <li class="list" id="list-item-14" data-list-id="14">
                         <div class="list__date">17/06/24</div>
                         <div class="list__grade">28/30</div>
                     </li>
@@ -63,7 +63,7 @@
             </div>
             <div class="chart__item subjects">
                 <div class="chart__item__title">Assuntos mais errados</div>
-                <ul class="subjects__content">
+                <ol class="subjects__content">
                     <li class="subject">Funções</li>
                     <li class="subject">Geometria</li>
                     <li class="subject">Probabilidade</li>
@@ -73,7 +73,7 @@
                     <li class="subject">Funções</li>
                     <li class="subject">Geometria</li>
                     <li class="subject">Probabilidade</li>
-                </ul>
+                </ol>
             </div>
         </div>
     </div>
@@ -101,8 +101,7 @@
 </div>
 
 <script type="text/javascript" src="{% static 'js/components/modal.js'%}"></script>
-<script type="text/javascript" src="{% static 'js/animations/general.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/components/popup.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/home/chart.js'%}"></script>
 
 {% endblock %}
 

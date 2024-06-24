@@ -15,3 +15,7 @@
     border-radius: 2rem;
     background-color: var(--secondary-color);
 }
+
+.list__content {
+    text-align: center;
+}

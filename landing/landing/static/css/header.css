@@ -55,3 +55,10 @@ header {
 .user__profile:hover .fa-sign-out-alt {
     display: inline-block;
 }
+
+@media screen and (max-width: 620px) {
+    .header__content {
+        flex-direction: column;
+        gap: .75rem;
+    }
+}

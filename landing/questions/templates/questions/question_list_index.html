@@ -4,6 +4,7 @@
 {% block content %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'css/templates/questions/question_list_index.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/components/modal.css' %}">
 
 <main class="container">
     <div class="lists">
@@ -15,7 +16,7 @@
             <div class="lists__board">
                 <div class="list">
                     {% for list_item in lists %}
-                        <a  class="list__item">
+                        <a href="javascript:openList('{{list_item.title}}', '{{list_item.slug}}')" class="list__item">
                             {{list_item.title}}
                         </a>
                     {% endfor %}
@@ -24,5 +25,45 @@
         </div>
     </div>
 </main>
+
+<div class="modal" id="list__modal">
+    <div class="modal__backdrop"></div>
+    <div class="modal__container">
+        <form method="post" action="" class="modal__content">
+            <h3 class="modal__title"></h3>
+            <div class="modal__close" onclick="closeModal('#list__modal')">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="modal__body list__content">
+                <h3>Você está prestes a iniciar a lista <u><span class="list__title"></span></u><h3>
+                <p>Você tem 2 horas para responder a lista.</p>
+                <p><b>Boa sorte!</b></p>
+            </div>
+            <div class="modal__footer">
+                <button>Iniciar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript" src="{% static 'js/components/modal.js'%}"></script>
+<script>
+    const titles = document.querySelectorAll('.list__title, #modal__title');
+    function cleanModal() {
+        titles.forEach(titleEl => {
+            titleEl.innerHTML = '';
+        })
+    }
+
+    function openList(listTitle, listLink) {
+        cleanModal();
+        titles.forEach(titleEl => {
+            titleEl.innerHTML = listTitle;
+        })
+        document.querySelector('.modal__content').action = listLink;
+        openModal('#list__modal');
+
+    }
+</script>
 
 {% endblock %}

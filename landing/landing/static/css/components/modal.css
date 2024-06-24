@@ -19,6 +19,7 @@
 
 .modal__container {
     background-color: white;
+    color: var(--dark-bg);
     width: 60%;
     height: 40%;
     position: absolute;
@@ -49,6 +50,17 @@ body.modal-active {
     overflow: hidden;
 }
 
+.modal__body {
+    color: var(--dark-bg);
+    padding: 2rem;
+}
+
+.modal__footer {
+    color: var(--dark-bg);
+    display: flex;
+    justify-content: space-evenly;
+}
+
 .modal__list {
     display: grid;
     justify-content: space-evenly;
@@ -62,4 +74,8 @@ body.modal-active {
     padding: 1rem;
     text-align: center;
     border-radius: 1rem;
+}
+
+.modal__footer button {
+    padding: 1rem 2rem;
 }
