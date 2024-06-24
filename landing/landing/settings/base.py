@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     "home",
     "landing",
     "questions",
-    "search",
     "wagtail",
     "wagtailmetadata",
     "wagtail.contrib.forms",

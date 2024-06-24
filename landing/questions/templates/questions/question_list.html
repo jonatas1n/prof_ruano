@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static i18n wagtailcore_tags wagtailimages_tags %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/templates/questions/question_list.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'js/components/counter.css' %}">
+
+<div class="container">
+    <div class="test__header">
+        <h1 class="test__title">{{ test.title }}</h1>
+        <div class="counter" data-duration="{{ test.duration }}" data-start="{{test.created_at}}">
+            <div class="counter__text">Tempo restante para o fim do prazo</div>
+            <div class="counter__display">00:00:00</div>
+            <div class="counter__total">Tempo Limite:</div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="{% static 'js/components/counter.js'%}"></script>
+
+{% endblock %}

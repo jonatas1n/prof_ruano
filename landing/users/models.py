@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+from questions.models import QuestionListSubmission
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, email, password, **extra_fields):
@@ -35,6 +36,10 @@ class CustomUser(AbstractUser):
     REQUIRED_FIELDS = []
 
     objects = CustomUserManager()
+
+    @property
+    def is_test_in_progress(self):
+        return QuestionListSubmission.objects.filter(user=self, is_active=True).first()
 
     def __str__(self):
         return self.email

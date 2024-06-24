@@ -38,10 +38,13 @@ class QuestionList(Page):
         blank=True,
     )
 
+    duration = models.IntegerField(verbose_name="Duração em minutos", default=120)
+
     instructions = RichTextField(max_length=255, verbose_name="Instruções", null=True, blank=True)
 
     content_panels = Page.content_panels + [
         FieldPanel("questions"),
+        FieldPanel("duration"),
         FieldPanel("instructions"),
     ]
 
@@ -82,3 +85,14 @@ class QuestionItem(Page):
     @method_decorator(login_required)
     def serve(self, request, *args, **kwargs):
         return super().serve(request, *args, **kwargs)
+
+class QuestionListSubmission(models.Model):
+    user = models.ForeignKey("users.CustomUser", on_delete=models.CASCADE)
+    questionsList = models.ForeignKey("questions.QuestionList", on_delete=models.CASCADE)
+    answers = models.JSONField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f"{self.user.email} - {self.list.title}"
