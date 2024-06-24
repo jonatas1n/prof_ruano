@@ -16,7 +16,7 @@
             <div class="lists__board">
                 <div class="list">
                     {% for list_item in lists %}
-                        <a href="javascript:openList('{{list_item.title}}', '{{list_item.slug}}', '{{list_item.list_size}}')" class="list__item">
+                        <a href="javascript:openList('{{list_item.title}}', '{{list_item.slug}}')" class="list__item">
                             {{list_item.title}}
                         </a>
                     {% endfor %}
@@ -39,9 +39,13 @@
             <div class="modal__body list__content">
                 <h3>Você está prestes a iniciar a lista <u><span class="list__title"></span></u></h3>
                 <hr>
-                <p>Você tem 2 horas para responder a lista.</p>
-                <p>A lista contém <span class="list__count"></span> questões.</p>
-                <p><b>Boa sorte!</b></p>
+                <div class="list__instructions">
+                    {% if list_item.instructions %}
+                        {{ list_item.instructions|richtext }}
+                    {% else %}
+                        {{ page.default_instructions}}
+                    {% endif %}
+                </div>
             </div>
             <div class="modal__footer">
                 <button>Iniciar</button>
@@ -59,13 +63,12 @@
         })
     }
 
-    function openList(listTitle, listLink, listCount) {
+    function openList(listTitle, listLink) {
         cleanModal();
         titles.forEach(titleEl => {
             titleEl.innerHTML = listTitle;
         })
         document.querySelector('.modal__content').action = listLink;
-        document.querySelector(".list__count").innerText = listCount;
         openModal('#list__modal');
 
     }

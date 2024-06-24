@@ -12,10 +12,16 @@ class QuestionListIndex(Page):
     parent_page_types = ["home.LandingPage"]
     is_creatable = False
 
+    default_instructions = RichTextField(max_length=255, verbose_name="Instruções padrão", null=True, blank=True)
+
     def get_context(self, request):
         context = super().get_context(request)
         context["lists"] = QuestionList.objects.live()
         return context
+
+    content_panels = Page.content_panels + [
+        FieldPanel("default_instructions"),
+    ]
 
     @method_decorator(login_required)
     def serve(self, request, *args, **kwargs):
@@ -32,13 +38,20 @@ class QuestionList(Page):
         blank=True,
     )
 
+    instructions = RichTextField(max_length=255, verbose_name="Instruções", null=True, blank=True)
+
     content_panels = Page.content_panels + [
         FieldPanel("questions"),
+        FieldPanel("instructions"),
     ]
 
     ## define the verbose name
     class Meta:
         verbose_name = "Lista de Questões"
+
+    @property
+    def list_size(self):
+        return len(self.questions)
 
     @method_decorator(login_required)
     def serve(self, request, *args, **kwargs):
