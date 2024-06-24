@@ -140,6 +140,8 @@ AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
 )
 
+WAGTAILADMIN_BASE_URL = "/admin/"
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
