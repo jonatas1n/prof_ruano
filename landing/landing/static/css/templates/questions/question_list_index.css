@@ -11,6 +11,7 @@
 }
 
 .list__item {
+    text-align: center;
     padding: 1.5rem;
     border-radius: 2rem;
     background-color: var(--secondary-color);
@@ -18,4 +19,9 @@
 
 .list__content {
     text-align: center;
+}
+
+.list__content ul {
+    text-align: left;
+    width: 50%;
 }

@@ -16,7 +16,7 @@
             <div class="lists__board">
                 <div class="list">
                     {% for list_item in lists %}
-                        <a href="javascript:openList('{{list_item.title}}', '{{list_item.slug}}')" class="list__item">
+                        <a href="javascript:openList('{{list_item.title}}', '{{list_item.slug}}', '{{list_item.list_size}}')" class="list__item">
                             {{list_item.title}}
                         </a>
                     {% endfor %}
@@ -30,13 +30,17 @@
     <div class="modal__backdrop"></div>
     <div class="modal__container">
         <form method="post" action="" class="modal__content">
-            <h3 class="modal__title"></h3>
-            <div class="modal__close" onclick="closeModal('#list__modal')">
-                <i class="fas fa-times"></i>
+            <div class="modal__header">
+                <h3 class="modal__title"></h3>
+                <div class="modal__close" onclick="closeModal('#list__modal')">
+                    <i class="fas fa-times"></i>
+                </div>
             </div>
             <div class="modal__body list__content">
-                <h3>Você está prestes a iniciar a lista <u><span class="list__title"></span></u><h3>
+                <h3>Você está prestes a iniciar a lista <u><span class="list__title"></span></u></h3>
+                <hr>
                 <p>Você tem 2 horas para responder a lista.</p>
+                <p>A lista contém <span class="list__count"></span> questões.</p>
                 <p><b>Boa sorte!</b></p>
             </div>
             <div class="modal__footer">
@@ -48,19 +52,20 @@
 
 <script type="text/javascript" src="{% static 'js/components/modal.js'%}"></script>
 <script>
-    const titles = document.querySelectorAll('.list__title, #modal__title');
+    const titles = document.querySelectorAll('.list__title, .modal__title');
     function cleanModal() {
         titles.forEach(titleEl => {
             titleEl.innerHTML = '';
         })
     }
 
-    function openList(listTitle, listLink) {
+    function openList(listTitle, listLink, listCount) {
         cleanModal();
         titles.forEach(titleEl => {
             titleEl.innerHTML = listTitle;
         })
         document.querySelector('.modal__content').action = listLink;
+        document.querySelector(".list__count").innerText = listCount;
         openModal('#list__modal');
 
     }

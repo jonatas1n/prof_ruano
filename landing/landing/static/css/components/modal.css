@@ -20,12 +20,13 @@
 .modal__container {
     background-color: white;
     color: var(--dark-bg);
-    width: 60%;
-    height: 40%;
+    max-width: 60%;
+    max-height: 40%;
     position: absolute;
     z-index: 600;
     border-radius: 2rem;
     margin-top: 12rem;
+    display: grid;
 }
 
 .modal__header {
@@ -37,13 +38,18 @@
 .modal__content {
     display: grid;
     grid-template-columns: 1fr;
-    grid-gap: 1rem;
+    
     padding: 2rem;
     color: var(--dark-bg);
+    align-content: space-between;
 }
 
 .modal__close {
     color: var(--dark-bg);
+}
+
+.modal__close:hover {
+    cursor: pointer;
 }
 
 body.modal-active {
