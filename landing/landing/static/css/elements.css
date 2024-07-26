@@ -27,6 +27,10 @@ button {
     width: fit-content;
 }
 
+button:hover {
+    background-color: var(--secondary-green);
+}
+
 button :disabled {
     background-color: #666;
     border-color: white;

@@ -1,25 +1,14 @@
 .menu-top {
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-auto-flow: column;
+    justify-content: stretch;
     gap: 1.5rem;
     margin-block: 3rem;
 }
 
-.menu-top__item {
-    width: 100%;
-    max-width: 50%;
-    text-align: center;
-    padding: 1rem;
-    background-color: var(--secondary-color);
-    border-radius: 100vmax;
-    text-decoration: none;
+.menu-top__item button {
     font-size: 1.25rem;
-    cursor: pointer;
-}
-
-.menu-top__item:hover {
-    background-color: var(--secondary-green);
-    text-decoration: none;
+    width: 100%;
 }
 
 .chart__title {

@@ -17,12 +17,16 @@
         <div class="menu-top">
             {% if lists %}
                 <a class="menu-top__item" href="{{lists_slug}}">
+                    <button>
                     Praticar as Listas
+                    </button>
                 </a>
             {% endif %}
             {% if hints %}
-                <a class="menu-top__item" onclick="openModal('#hint__modal')">
-                    Bizus para prova
+                <a class="menu-top__item" href="javascript:openModal('#hint__modal')">
+                    <button>
+                        Bizus para prova
+                    </button>
                 </a>
             {% endif %}
         </div>

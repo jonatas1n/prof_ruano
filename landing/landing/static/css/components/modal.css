@@ -9,6 +9,11 @@
 }
 
 .modal {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     display: none;
     place-items: center;
 }
@@ -25,7 +30,6 @@
     position: absolute;
     z-index: 600;
     border-radius: 2rem;
-    margin-top: 12rem;
     display: grid;
 }
 
