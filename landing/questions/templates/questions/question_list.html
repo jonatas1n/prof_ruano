@@ -6,7 +6,7 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/templates/questions/question_list.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'js/components/counter.css' %}">
 
-<div class="container">
+<div id="test" class="container">
     <div class="test__header">
         <h1 class="test__title">{{ test.title }}</h1>
         <div class="counter" data-duration="{{ test.duration }}" data-start="{{test.created_at}}">
@@ -14,6 +14,36 @@
             <div class="counter__display">00:00:00</div>
             <div class="counter__total">Tempo Limite:</div>
         </div>
+    </div>
+
+    <div class="test__content">
+        <div class="test__instructions">
+            {{ test.instructions|richtext }}
+        </div>
+
+        <form method="post" class="test__questions">
+            {% csrf_token %}
+            <div class="questions__content">
+                {% for question_block in page.questions %}
+                    {% with question=question_block.value %}
+                        <div class="question">
+                            <div class="question__content">
+                                {{ forloop.counter }}. {{ question.question|richtext }}
+                            </div>
+                            <div class="question__options">
+                                {% for option in question.answers %}
+                                    <div class="question__option">
+                                        <input type="radio" id="option_{{ option.id }}" name="question_{{ question.id }}" value="{{ option.id }}">
+                                        <label for="option_{{ option.id }}">{{ option.value.answer|richtext }}</label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endwith %}
+                {% endfor %}
+            </div>
+            <button type="submit">Finalizar Lista</button>
+        </form>
     </div>
 </div>
 

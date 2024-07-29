@@ -1,12 +1,15 @@
-from tabnanny import verbose
 from django.db import models
 from wagtail.models import Page
 from wagtail.fields import RichTextField, StreamField
 from wagtail.admin.panels import FieldPanel
-from wagtail.blocks import BooleanBlock, TextBlock, StructBlock, CharBlock, PageChooserBlock, RichTextBlock
+from wagtail.blocks import BooleanBlock, StructBlock, PageChooserBlock, RichTextBlock
 
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.shortcuts import redirect
+from django.utils import timezone
+
+from datetime import timedelta
 
 class QuestionListIndex(Page):
     parent_page_types = ["home.LandingPage"]
@@ -16,8 +19,26 @@ class QuestionListIndex(Page):
 
     def get_context(self, request):
         context = super().get_context(request)
+        if request.method == "POST":
+            question_list_id = request.POST.get("list_id")
+            question_list = QuestionList.objects.get(id=question_list_id)
+            list_submission = question_list.start_list(request)
+            if list_submission:
+                return redirect(list_submission)
+            context["error"] = "Você já está fazendo uma prova"
+
         context["lists"] = QuestionList.objects.live()
+        active_submissions = QuestionListSubmission.get_active_submissions(request.user)
+        if active_submissions:
+            active_list = active_submissions[0].questionsList
+            context["active_list"] = active_list
+            
         return context
+    
+    def start_list(request, question_list_id):
+        question_list = QuestionList.objects.get(id=question_list_id)
+        submission = QuestionListSubmission.objects.create(user=request.user, questionsList=question_list, answers={})
+        return submission
 
     content_panels = Page.content_panels + [
         FieldPanel("default_instructions"),
@@ -41,6 +62,13 @@ class QuestionList(Page):
     duration = models.IntegerField(verbose_name="Duração em minutos", default=120)
 
     instructions = RichTextField(max_length=255, verbose_name="Instruções", null=True, blank=True)
+    
+    def start_list(self, request):
+        existing_submissions = QuestionListSubmission.get_active_submissions(request.user)
+        if existing_submissions:
+            return False
+        submission = QuestionListSubmission.objects.create(user=request.user, questionsList=self, answers={})
+        return submission
 
     content_panels = Page.content_panels + [
         FieldPanel("questions"),
@@ -48,7 +76,10 @@ class QuestionList(Page):
         FieldPanel("instructions"),
     ]
 
-    ## define the verbose name
+    def context(self, request):
+        context = super().get_context(request)
+        return context
+
     class Meta:
         verbose_name = "Lista de Questões"
 
@@ -92,7 +123,17 @@ class QuestionListSubmission(models.Model):
     answers = models.JSONField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    is_active = models.BooleanField(default=True)
+    is_finished = models.BooleanField(default=False)
+    
+    def is_active(self):
+        duration = self.questionsList.duration
+        return not self.is_finished and self.created_at + timedelta(minutes=duration) > timezone.now()
+    
+    @staticmethod
+    def get_active_submissions(user):
+        user_submissions = QuestionListSubmission.objects.filter(user=user)
+        active_user_submissions = [submission for submission in user_submissions if submission.is_active]
+        return active_user_submissions
 
     def __str__(self):
         return f"{self.user.email} - {self.list.title}"

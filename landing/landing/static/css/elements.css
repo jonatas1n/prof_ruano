@@ -16,12 +16,12 @@ section {
 }
 
 button {
-    padding: 10px;
+    padding: .625rem;
     background-color: var(--secondary-color);
     color: white;
     border: none;
     border-radius: 100vmax;
-    font-size: 1.125rem;
+    font-size: 1.25rem;
     font-weight: bold;
     transition: 0.25s;
     width: fit-content;
@@ -31,7 +31,7 @@ button:hover {
     background-color: var(--secondary-green);
 }
 
-button :disabled {
+button:disabled {
     background-color: #666;
     border-color: white;
 }
@@ -85,18 +85,13 @@ h5 {
     line-height: 27px;
 }
 
-p {
-    font-size: 16px;
-    line-height: 22px;
-}
-
 a {
     color: var(--blue);
     font-weight: 700;
 }
 
 button, .button-text {
-    font-size: 14px;
+    font-size: 1.25rem;
     line-height: 16px;
 }
 
@@ -116,8 +111,6 @@ h1, h2 {color: var(--dark-blue);}
 
 h5, p {
     font-family: 'Lato';
-    font-style: normal;
-    font-weight: 400;
 }
 
 h1, h2, h3, h4, button, .button-text, caption {

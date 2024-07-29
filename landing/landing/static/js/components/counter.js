@@ -10,8 +10,18 @@ function startCounter() {
     const currentTime = new Date().getTime();
     const elapsedTime = currentTime - nowTime;
     const progress = elapsedTime / duration;
-    const currentValue = Math.floor(progress * start);
+    const currentCount = Math.floor(progress * start);
 
-    counterDisplay.textContent = currentValue;
-  }
-}
+    counterDisplay.textContent = currentCount;
+
+    if (currentCount >= start) {
+      clearInterval(interval);
+      counterDisplay.textContent = start;
+    }
+  }, 1000);
+
+  return interval;
+};
+
+
+console.log

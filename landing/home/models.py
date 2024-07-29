@@ -36,8 +36,10 @@ class LandingPage(MetadataPageMixin, Page):
 
     def get_context(self, request):
         context = super().get_context(request)
-        context["lists"] = QuestionList.objects.all()
-        context['lists_slug'] = QuestionListIndex.objects.first().slug
+        lists = QuestionList.objects.all()
+        if lists:
+            context["lists"] = lists
+            context['lists_slug'] = QuestionListIndex.objects.first().slug
         context["hints"] = HintPage.objects.filter(is_active=True)
         return context
 

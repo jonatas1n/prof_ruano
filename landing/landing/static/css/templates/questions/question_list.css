@@ -1,0 +1,52 @@
+body {
+  background-color: white;
+  color: black;
+}
+
+#test {
+  display: grid;
+  grid-gap: 2rem;
+}
+
+.header__content {
+  background-color: var(--dark-bg);
+  padding-inline: 1rem;
+  border-radius: 0 0 1rem 1rem;
+}
+
+.test__questions {
+  display: grid;
+  grid-gap: 2rem;
+}
+
+.questions__content {
+  display: grid;
+  grid-gap: .5rem;
+}
+
+.question {
+  background-color: var(--light-bg);
+  padding: .5rem;
+  border-radius: 1rem;
+}
+
+.question__option {
+  display: flex;
+}
+
+form > button {
+  justify-self: center;
+  padding: 1rem;
+}
+
+.question__content {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-weight: bold;
+  border-bottom: 1px solid black;
+}
+
+.question__content p {
+  font-weight: bold;
+}
