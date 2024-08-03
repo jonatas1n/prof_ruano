@@ -1,5 +1,3 @@
-version: "3.3"
-
 services:
 
   prof_ruano_server:
