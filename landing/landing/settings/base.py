@@ -26,11 +26,11 @@ DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
-POSTGRES_PORT = env("POSTGRES_PORT", default=5432)
-POSTGRES_DB = env("POSTGRES_DB")
-POSTGRES_USER = env("POSTGRES_USER")
-POSTGRES_PASSWORD = env("POSTGRES_PASSWORD")
-POSTGRES_HOST = env("POSTGRES_HOST")
+# POSTGRES_PORT = env("POSTGRES_PORT", default=5432)
+# POSTGRES_DB = env("POSTGRES_DB")
+# POSTGRES_USER = env("POSTGRES_USER")
+# POSTGRES_PASSWORD = env("POSTGRES_PASSWORD")
+# POSTGRES_HOST = env("POSTGRES_HOST")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
