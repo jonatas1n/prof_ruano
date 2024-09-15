@@ -15,7 +15,7 @@ class QuestionListIndex(Page):
     parent_page_types = ["home.LandingPage"]
     is_creatable = False
 
-    default_instructions = RichTextField(max_length=255, verbose_name="Instruções padrão", null=True, blank=True)
+    default_instructions = RichTextField(max_length=255, verbose_name="Instruções padrões para a realização dos testes", null=True, blank=True)
 
     def get_context(self, request):
         context = super().get_context(request)
