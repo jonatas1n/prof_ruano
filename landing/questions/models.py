@@ -1,7 +1,8 @@
 from django.db import models
-from wagtail.models import Page
+from wagtail.models import Page, Orderable
+from modelcluster.fields import ParentalKey
 from wagtail.fields import RichTextField, StreamField
-from wagtail.admin.panels import FieldPanel
+from wagtail.admin.panels import FieldPanel, InlinePanel
 from wagtail.blocks import BooleanBlock, StructBlock, PageChooserBlock, RichTextBlock
 
 from django.contrib.auth.decorators import login_required
@@ -50,17 +51,7 @@ class QuestionListIndex(Page):
 
 class QuestionList(Page):
     parent_page_types = ["questions.QuestionListIndex"]
-
-    questions = StreamField(
-        [
-            ("question", PageChooserBlock(page_type="questions.QuestionItem")),
-        ],
-        null=True,
-        blank=True,
-    )
-
     duration = models.IntegerField(verbose_name="Duração em minutos", default=120)
-
     instructions = RichTextField(max_length=255, verbose_name="Instruções", null=True, blank=True)
     
     def start_list(self, request):
@@ -71,7 +62,7 @@ class QuestionList(Page):
         return submission
 
     content_panels = Page.content_panels + [
-        FieldPanel("questions"),
+        InlinePanel("questions", label="Questões"),
         FieldPanel("duration"),
         FieldPanel("instructions"),
     ]
@@ -91,8 +82,8 @@ class QuestionList(Page):
     def serve(self, request, *args, **kwargs):
         return super().serve(request, *args, **kwargs)
 
-class QuestionItem(Page):
-    parent_page_types = ["questions.QuestionList", "questions.QuestionListIndex"]
+class QuestionItem(Orderable):
+    question_list = ParentalKey("questions.QuestionList", related_name="questions")
     question = RichTextField(max_length=255, verbose_name="Enunciado da questão")
     answers = StreamField(
         [
@@ -105,17 +96,10 @@ class QuestionItem(Page):
         ], null=True, blank=True, max_num=5, min_num=2, verbose_name="Alternativas"
     )
 
-    content_panels = Page.content_panels + [
+    panels = [
         FieldPanel("question"),
         FieldPanel("answers"),
     ]
-
-    class Meta:
-        verbose_name = "Questão"
-
-    @method_decorator(login_required)
-    def serve(self, request, *args, **kwargs):
-        return super().serve(request, *args, **kwargs)
 
 class QuestionListSubmission(models.Model):
     user = models.ForeignKey("users.CustomUser", on_delete=models.CASCADE)
