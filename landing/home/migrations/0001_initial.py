@@ -14,6 +14,8 @@ class Migration(migrations.Migration):
     dependencies = [
         ('wagtailimages', '0026_delete_uploadedimage'),
         ('wagtailcore', '0093_uploadedfile'),
+        ('wagtailsearch', '0008_remove_query_and_querydailyhits_models'),
+        ('questions', '0001_initial'),
     ]
 
     operations = [
