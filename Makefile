@@ -4,16 +4,16 @@ attach:
 	docker exec -it $(SERVER_CONTAINER) bash
 
 up:
-	docker-compose up -d
+	docker compose up -d
 
 logs:
-	docker-compose logs -f
+	docker compose logs -f
 
 stop:
-	docker-compose stop
+	docker compose stop
 
 rm:
-	docker-compose rm
+	docker compose rm
 
 install:
 	docker exec -it $(SERVER_CONTAINER) poetry install
