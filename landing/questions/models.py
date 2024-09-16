@@ -20,26 +20,13 @@ class QuestionListIndex(Page):
 
     def get_context(self, request):
         context = super().get_context(request)
-        if request.method == "POST":
-            question_list_id = request.POST.get("list_id")
-            question_list = QuestionList.objects.get(id=question_list_id)
-            list_submission = question_list.start_list(request)
-            if list_submission:
-                return redirect(list_submission)
-            context["error"] = "Você já está fazendo uma prova"
-
         context["lists"] = QuestionList.objects.live()
-        active_submissions = QuestionListSubmission.get_active_submissions(request.user)
-        if active_submissions:
-            active_list = active_submissions[0].questionsList
+        active_submission = QuestionListSubmission.get_active_submissions(request.user)
+        if active_submission:
+            active_list = active_submission.questionsList
             context["active_list"] = active_list
             
         return context
-
-    def start_list(request, question_list_id):
-        question_list = QuestionList.objects.get(id=question_list_id)
-        submission = QuestionListSubmission.objects.create(user=request.user, questionsList=question_list, answers={})
-        return submission
 
     content_panels = Page.content_panels + [
         FieldPanel("default_instructions"),
@@ -47,6 +34,16 @@ class QuestionListIndex(Page):
 
     @method_decorator(login_required)
     def serve(self, request, *args, **kwargs):
+        context = self.get_context(request)
+        if request.method == "POST":
+            question_list_id = request.POST.get("list_id")
+            question_list = QuestionList.objects.get(id=question_list_id)
+            list_submission = question_list.start_list(request)
+            if list_submission:
+                return redirect(list_submission)
+            context["error"] = "Você já está fazendo uma prova"
+        
+        args = (request, context)
         return super().serve(request, *args, **kwargs)
 
 class QuestionItem(Orderable):
@@ -95,21 +92,20 @@ class QuestionList(Page):
     def get_answers(self, answers):
         pass
 
-    def get_context(self, request):
+    @method_decorator(login_required)
+    def serve(self, request, *args, **kwargs):
         active_submission = QuestionListSubmission.get_active_submissions(request.user)
         if active_submission:
             active_list = active_submission.questionsList
+            if not active_list:
+                return (redirect('home:landing_page'))
             if active_list != self:
                 return redirect(active_submission)
+
         if request.method == "POST":
             submission = QuestionListSubmission.objects.create(user=request.user, questionsList=self, answers=request.POST)
-            return redirect(submission)
 
-        context = super().get_context(request)
-        return context
-
-    @method_decorator(login_required)
-    def serve(self, request, *args, **kwargs):
+            return redirect('/question-list-index')
         return super().serve(request, *args, **kwargs)
 
 class QuestionListSubmission(models.Model):
@@ -126,9 +122,10 @@ class QuestionListSubmission(models.Model):
     
     @staticmethod
     def get_active_submissions(user):
-        user_submissions = QuestionListSubmission.objects.filter(user=user)
-        active_user_submission = [submission for submission in user_submissions if submission.is_active][0]
-        return active_user_submission
+        user_submission = QuestionListSubmission.objects.filter(user=user, is_finished=False).first()
+        if not user_submission:
+            return None
+        return user_submission
 
     def __str__(self):
         return f"{self.user.email} - {self.questionsList.title}"

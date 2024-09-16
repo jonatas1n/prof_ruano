@@ -14,7 +14,7 @@
             </div>
             <a href="/" class="lists__back">< Voltar para o início</a>
             {% if active_list %}
-                <h3>Você está realizando a lista <a href="/{{active_list.slug}}">{{ active_list.title }}</a></h3>
+                <h3>Você está realizando a lista <a href="{{active_list.slug}}">{{ active_list.title }}</a></h3>
             {% endif %}
             <div class="lists__board">
                 <div class="list">

@@ -18,19 +18,7 @@
       <form method="post">
         {% csrf_token %}
         <div class="fields">
-          <p>
-            <label for="id_email">E-mail</label>
-            <input type="email" name="email" id="email" required />
-          </p>
-          <p>
-            <label for="id_password">Senha</label>
-            <input type="password" name="password" id="password" required />
-          </p>
-          <p>
-            <label for="id_password2">Confirme a senha</label>
-            <input type="password" name="confirm_password" id="confirm_password" required />
-          </p>
-        </div>
+         {{ form.as_p }}
         <div class="login__buttons">
           <a class="login__register" href="/auth">Já tem cadastro?</a>
           <button type="submit" class="login__button">Registrar</button>

@@ -32,7 +32,7 @@
                         <div class="question__options">
                             {% for option in question_item.answers %}
                                 <div class="question__option">
-                                    <input type="radio" id="option_{{ option.id }}" name="question_{{ question.id }}" value="{{ option.id }}">
+                                    <input type="radio" id="option_{{ option.id }}" name="question_{{ question_item.id }}" value="{{ option.id }}">
                                     <label for="option_{{ option.id }}">{{ option.value.answer|richtext }}</label>
                                 </div>
                             {% endfor %}
