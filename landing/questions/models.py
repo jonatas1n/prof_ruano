@@ -3,7 +3,7 @@ from wagtail.models import Page, Orderable
 from modelcluster.fields import ParentalKey
 from wagtail.fields import RichTextField, StreamField
 from wagtail.admin.panels import FieldPanel, InlinePanel
-from wagtail.blocks import BooleanBlock, StructBlock, PageChooserBlock, RichTextBlock
+from wagtail.blocks import BooleanBlock, StructBlock, RichTextBlock
 
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -35,7 +35,7 @@ class QuestionListIndex(Page):
             context["active_list"] = active_list
             
         return context
-    
+
     def start_list(request, question_list_id):
         question_list = QuestionList.objects.get(id=question_list_id)
         submission = QuestionListSubmission.objects.create(user=request.user, questionsList=question_list, answers={})
@@ -44,39 +44,6 @@ class QuestionListIndex(Page):
     content_panels = Page.content_panels + [
         FieldPanel("default_instructions"),
     ]
-
-    @method_decorator(login_required)
-    def serve(self, request, *args, **kwargs):
-        return super().serve(request, *args, **kwargs)
-
-class QuestionList(Page):
-    parent_page_types = ["questions.QuestionListIndex"]
-    duration = models.IntegerField(verbose_name="Duração em minutos", default=120)
-    instructions = RichTextField(max_length=255, verbose_name="Instruções", null=True, blank=True)
-    
-    def start_list(self, request):
-        existing_submissions = QuestionListSubmission.get_active_submissions(request.user)
-        if existing_submissions:
-            return False
-        submission = QuestionListSubmission.objects.create(user=request.user, questionsList=self, answers={})
-        return submission
-
-    content_panels = Page.content_panels + [
-        InlinePanel("questions", label="Questões"),
-        FieldPanel("duration"),
-        FieldPanel("instructions"),
-    ]
-
-    def context(self, request):
-        context = super().get_context(request)
-        return context
-
-    class Meta:
-        verbose_name = "Lista de Questões"
-
-    @property
-    def list_size(self):
-        return len(self.questions)
 
     @method_decorator(login_required)
     def serve(self, request, *args, **kwargs):
@@ -101,6 +68,50 @@ class QuestionItem(Orderable):
         FieldPanel("answers"),
     ]
 
+class QuestionList(Page):
+    parent_page_types = ["questions.QuestionListIndex"]
+    duration = models.IntegerField(verbose_name="Duração em minutos", default=120)
+    instructions = RichTextField(max_length=255, verbose_name="Instruções", null=True, blank=True)
+    
+    def start_list(self, request):
+        existing_submissions = QuestionListSubmission.get_active_submissions(request.user)
+        if existing_submissions:
+            return
+        submission = QuestionListSubmission.objects.create(user=request.user, questionsList=self, answers={})
+        return submission
+
+    content_panels = Page.content_panels + [
+        InlinePanel("questions", label="Questões"),
+        FieldPanel("duration"),
+        FieldPanel("instructions"),
+    ]
+    class Meta:
+        verbose_name = "Lista de Questões"
+
+    @property
+    def list_size(self):
+        return len(self.questions)
+    
+    def get_answers(self, answers):
+        pass
+
+    def get_context(self, request):
+        active_submission = QuestionListSubmission.get_active_submissions(request.user)
+        if active_submission:
+            active_list = active_submission.questionsList
+            if active_list != self:
+                return redirect(active_submission)
+        if request.method == "POST":
+            submission = QuestionListSubmission.objects.create(user=request.user, questionsList=self, answers=request.POST)
+            return redirect(submission)
+
+        context = super().get_context(request)
+        return context
+
+    @method_decorator(login_required)
+    def serve(self, request, *args, **kwargs):
+        return super().serve(request, *args, **kwargs)
+
 class QuestionListSubmission(models.Model):
     user = models.ForeignKey("users.CustomUser", on_delete=models.CASCADE)
     questionsList = models.ForeignKey("questions.QuestionList", on_delete=models.CASCADE)
@@ -116,8 +127,8 @@ class QuestionListSubmission(models.Model):
     @staticmethod
     def get_active_submissions(user):
         user_submissions = QuestionListSubmission.objects.filter(user=user)
-        active_user_submissions = [submission for submission in user_submissions if submission.is_active]
-        return active_user_submissions
+        active_user_submission = [submission for submission in user_submissions if submission.is_active][0]
+        return active_user_submission
 
     def __str__(self):
-        return f"{self.user.email} - {self.list.title}"
+        return f"{self.user.email} - {self.questionsList.title}"

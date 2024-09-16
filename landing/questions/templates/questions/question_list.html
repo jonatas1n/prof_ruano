@@ -24,22 +24,20 @@
         <form method="post" class="test__questions">
             {% csrf_token %}
             <div class="questions__content">
-                {% for question_block in page.questions %}
-                    {% with question=question_block.value %}
-                        <div class="question">
-                            <div class="question__content">
-                                {{ forloop.counter }}. {{ question.question|richtext }}
-                            </div>
-                            <div class="question__options">
-                                {% for option in question.answers %}
-                                    <div class="question__option">
-                                        <input type="radio" id="option_{{ option.id }}" name="question_{{ question.id }}" value="{{ option.id }}">
-                                        <label for="option_{{ option.id }}">{{ option.value.answer|richtext }}</label>
-                                    </div>
-                                {% endfor %}
-                            </div>
+                {% for question_item in page.questions.all %}
+                    <div class="question">
+                        <div class="question__content">
+                            {{ forloop.counter }}. {{ question_item.question|richtext }}
                         </div>
-                    {% endwith %}
+                        <div class="question__options">
+                            {% for option in question_item.answers %}
+                                <div class="question__option">
+                                    <input type="radio" id="option_{{ option.id }}" name="question_{{ question.id }}" value="{{ option.id }}">
+                                    <label for="option_{{ option.id }}">{{ option.value.answer|richtext }}</label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
                 {% endfor %}
             </div>
             <button type="submit">Finalizar Lista</button>

@@ -25,3 +25,16 @@
     font-weight: 700;
     line-height: 1.5rem;
 }
+
+.active-list {
+    display: grid;
+    grid-template-columns: auto 2fr;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.active-list .btn {
+    width: 100%;
+}

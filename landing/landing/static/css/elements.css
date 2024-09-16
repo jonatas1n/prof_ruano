@@ -15,7 +15,7 @@ section {
     scroll-snap-align: start;
 }
 
-button {
+button, .btn {
     padding: .625rem;
     background-color: var(--secondary-color);
     color: white;
@@ -25,13 +25,19 @@ button {
     font-weight: bold;
     transition: 0.25s;
     width: fit-content;
+    text-decoration: none;
+    text-align: center;
 }
 
-button:hover {
+:is(button, .btn).border {
+    border: 3px solid white;
+}
+
+:is(button, .btn):hover {
     background-color: var(--secondary-green);
 }
 
-button:disabled {
+:is(button, .is):disabled {
     background-color: #666;
     border-color: white;
 }

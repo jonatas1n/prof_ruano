@@ -19,7 +19,7 @@
             <div class="lists__board">
                 <div class="list">
                     {% for list_item in lists %}
-                        <a href="javascript:openList('{{list_item.title}}', '{{list_item.slug}}')" class="list__item">
+                        <a href="javascript:openList('{{list_item.title}}', '{{list_item.id}}')" class="list__item">
                             <button {% if active_list %}disabled{% endif %}>
                                 {{list_item.title}}
                             </button>
@@ -45,6 +45,7 @@
             <div class="modal__body list__content">
                 <h3>Você está prestes a iniciar a lista <u><span class="list__title"></span></u></h3>
                 <hr>
+                <input type="hidden" name="list_id" id="list_input_id" value="">
                 <div class="list__instructions">
                     {% if list_item.instructions %}
                         {{ list_item.instructions|richtext }}
@@ -70,12 +71,12 @@
         })
     }
 
-    function openList(listTitle, listLink) {
+    function openList(listTitle, listId) {
         cleanModal();
         titles.forEach(titleEl => {
             titleEl.innerHTML = listTitle;
         })
-        document.querySelector('.modal__content').action = listLink + "/";
+        document.querySelector('#list_input_id').value = listId;
         openModal('#list__modal');
     }
 </script>

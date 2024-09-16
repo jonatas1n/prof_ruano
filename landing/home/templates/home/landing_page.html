@@ -12,12 +12,15 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/components/modal.css' %}">
 
 <main class="container">
+    {% if active_list %}
+        <h3>Você está realizando a lista <a href="/question-list-index/{{active_list.slug}}">{{ active_list.title }}</a></h3>
+    {% endif %}
     {% if hints or lists %}
         <div class="menu-top">
             {% if lists %}
                 <a class="menu-top__item" href="{{lists_slug}}">
                     <button>
-                    Praticar as Listas
+                        Praticar as Listas
                     </button>
                 </a>
             {% endif %}
