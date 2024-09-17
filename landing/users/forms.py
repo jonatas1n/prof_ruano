@@ -1,14 +1,19 @@
 from django import forms
 from users.models import CustomUser
 
+
 class RegisterForm(forms.Form):
     class meta:
         model = CustomUser
         fields = ["email", "password", "confirm_password"]
 
     email = forms.EmailField(label="Email", max_length=255)
-    password = forms.CharField(label="Senha", max_length=255, widget=forms.PasswordInput)
-    confirm_password = forms.CharField(label="Confirme a senha", max_length=255, widget=forms.PasswordInput)
+    password = forms.CharField(
+        label="Senha", max_length=255, widget=forms.PasswordInput
+    )
+    confirm_password = forms.CharField(
+        label="Confirme a senha", max_length=255, widget=forms.PasswordInput
+    )
 
     def save(self):
         email = self.cleaned_data["email"]

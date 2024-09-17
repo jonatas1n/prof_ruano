@@ -6,15 +6,15 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('questions', '0003_alter_questionlistindex_default_instructions'),
+        ("questions", "0003_alter_questionlistindex_default_instructions"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='questionlist',
-            name='questions',
+            model_name="questionlist",
+            name="questions",
         ),
         migrations.DeleteModel(
-            name='QuestionItem',
+            name="QuestionItem",
         ),
     ]

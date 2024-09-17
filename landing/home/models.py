@@ -3,12 +3,20 @@ from django.db import models
 
 from wagtailmetadata.models import MetadataPageMixin
 from wagtail.fields import RichTextField, StreamField
-from wagtail.blocks import BooleanBlock, TextBlock, StructBlock, CharBlock, PageChooserBlock, URLBlock
+from wagtail.blocks import (
+    BooleanBlock,
+    TextBlock,
+    StructBlock,
+    CharBlock,
+    PageChooserBlock,
+    URLBlock,
+)
 from wagtail.admin.panels import FieldPanel
 from questions.models import QuestionList, QuestionListIndex, QuestionListSubmission
 
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+
 
 class LandingPage(MetadataPageMixin, Page):
     is_creatable = False
@@ -36,14 +44,14 @@ class LandingPage(MetadataPageMixin, Page):
 
     def get_context(self, request):
         context = super().get_context(request)
-        active_submissions = QuestionListSubmission.get_active_submissions(request.user)
-        if active_submissions:
-            active_list = active_submissions[0].questionsList
+        active_submission = QuestionListSubmission.get_active_submissions(request.user)
+        if active_submission:
+            active_list = active_submission.questionsList
             context["active_list"] = active_list
         lists = QuestionList.objects.all()
         if lists:
             context["lists"] = lists
-            context['lists_slug'] = QuestionListIndex.objects.first().slug
+            context["lists_slug"] = QuestionListIndex.objects.first().slug
         context["hints"] = HintPage.objects.filter(is_active=True)
         return context
 
@@ -54,6 +62,7 @@ class LandingPage(MetadataPageMixin, Page):
     content_panels = Page.content_panels + [
         FieldPanel("popup"),
     ]
+
 
 class HintPage(Page):
     parent_page_types = ["home.LandingPage"]
@@ -72,8 +81,14 @@ class HintPage(Page):
         context = super().get_context(request)
         hint_pages = HintPage.objects.filter(is_active=True)
         context["index"] = list(hint_pages).index(self)
-        context["prev"] = hint_pages[context["index"] - 1] if context["index"] > 0 else None
-        context["next"] = hint_pages[context["index"] + 1] if context["index"] < len(hint_pages) - 1 else None
+        context["prev"] = (
+            hint_pages[context["index"] - 1] if context["index"] > 0 else None
+        )
+        context["next"] = (
+            hint_pages[context["index"] + 1]
+            if context["index"] < len(hint_pages) - 1
+            else None
+        )
         return context
 
     @method_decorator(login_required)

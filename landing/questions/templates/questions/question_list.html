@@ -4,45 +4,22 @@
 {% block content %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'css/templates/questions/question_list.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'js/components/counter.css' %}">
 
 <div id="test" class="container">
-    <div class="test__header">
-        <h1 class="test__title">{{ test.title }}</h1>
-        <div class="counter" data-duration="{{ test.duration }}" data-start="{{test.created_at}}">
-            <div class="counter__text">Tempo restante para o fim do prazo</div>
-            <div class="counter__display">00:00:00</div>
-            <div class="counter__total">Tempo Limite:</div>
-        </div>
-    </div>
-
-    <div class="test__content">
-        <div class="test__instructions">
-            {{ test.instructions|richtext }}
-        </div>
-
-        <form method="post" class="test__questions">
-            {% csrf_token %}
-            <div class="questions__content">
-                {% for question_item in page.questions.all %}
-                    <div class="question">
-                        <div class="question__content">
-                            {{ forloop.counter }}. {{ question_item.question|richtext }}
-                        </div>
-                        <div class="question__options">
-                            {% for option in question_item.answers %}
-                                <div class="question__option">
-                                    <input type="radio" id="option_{{ option.id }}" name="question_{{ question_item.id }}" value="{{ option.id }}">
-                                    <label for="option_{{ option.id }}">{{ option.value.answer|richtext }}</label>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                {% endfor %}
+    <form method="post" class="intro">
+        {% csrf_token %}
+        <div class="list__content">
+            <h3>Você está prestes a iniciar a lista <u><span class="list__title">{{question_list.title}}</span></u></h3>
+            <hr>
+            <input type="hidden" name="list_id" id="list_input_id" value="">
+            <div class="list__instructions">
+                {{ question_list.instructions }}
             </div>
-            <button type="submit">Finalizar Lista</button>
-        </form>
-    </div>
+        </div>
+        <div class="modal__footer">
+            <button>Iniciar</button>
+        </div>
+    </form>
 </div>
 
 <script type="text/javascript" src="{% static 'js/components/counter.js'%}"></script>

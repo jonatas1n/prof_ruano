@@ -19,7 +19,7 @@
             <div class="lists__board">
                 <div class="list">
                     {% for list_item in lists %}
-                        <a href="javascript:openList('{{list_item.title}}', '{{list_item.id}}')" class="list__item">
+                        <a href="/questions/{{list_item.id}}" class="list__item">
                             <button {% if active_list %}disabled{% endif %}>
                                 {{list_item.title}}
                             </button>
@@ -30,7 +30,7 @@
         </div>
     </div>
 </main>
-
+<!-- 
 <div class="modal" id="list__modal">
     <div class="modal__backdrop"></div>
     <div class="modal__container">
@@ -59,10 +59,10 @@
             </div>
         </form>
     </div>
-</div>
+</div> -->
 
 <script type="text/javascript" src="{% static 'js/components/modal.js'%}"></script>
-<script>
+<!-- <script>
     const titles = document.querySelectorAll('.list__title, .modal__title');
 
     function cleanModal() {
@@ -79,6 +79,6 @@
         document.querySelector('#list_input_id').value = listId;
         openModal('#list__modal');
     }
-</script>
+</script> -->
 
 {% endblock %}

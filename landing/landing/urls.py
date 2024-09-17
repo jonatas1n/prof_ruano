@@ -9,14 +9,13 @@ from wagtail.contrib.sitemaps.views import sitemap
 
 from django.conf.urls.static import static
 
-from users import views as users_views
-
 urlpatterns = [
     path("django-admin/", admin.site.urls),
     path("admin/", include(wagtailadmin_urls)),
     path("documents/", include(wagtaildocs_urls)),
     path("auth/", include("users.urls")),
     path("sitemap.xml", sitemap),
+    path("questions/", include("questions.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
@@ -32,7 +31,7 @@ urlpatterns = urlpatterns + [
     # For anything not caught by a more specific rule above, hand over to
     # Wagtail's page serving mechanism. This should be the last pattern in
     # the list:
-    path("", include('allauth.urls')),
+    path("", include("allauth.urls")),
     path("", include(wagtail_urls)),
     # Alternatively, if you want Wagtail pages to be served from a subpath
     # of your site, rather than the site root:

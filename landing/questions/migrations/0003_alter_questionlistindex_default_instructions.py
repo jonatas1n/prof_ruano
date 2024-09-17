@@ -7,13 +7,18 @@ import wagtail.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('questions', '0002_create_questions_list_index'),
+        ("questions", "0002_create_questions_list_index"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='questionlistindex',
-            name='default_instructions',
-            field=wagtail.fields.RichTextField(blank=True, max_length=255, null=True, verbose_name='Instruções padrões para a realização dos testes'),
+            model_name="questionlistindex",
+            name="default_instructions",
+            field=wagtail.fields.RichTextField(
+                blank=True,
+                max_length=255,
+                null=True,
+                verbose_name="Instruções padrões para a realização dos testes",
+            ),
         ),
     ]

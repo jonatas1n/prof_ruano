@@ -10,22 +10,68 @@ import wagtail.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('questions', '0004_remove_questionlist_questions_delete_questionitem'),
+        ("questions", "0004_remove_questionlist_questions_delete_questionitem"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='QuestionItem',
+            name="QuestionItem",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('sort_order', models.IntegerField(blank=True, editable=False, null=True)),
-                ('question', wagtail.fields.RichTextField(max_length=255, verbose_name='Enunciado da questão')),
-                ('answers', wagtail.fields.StreamField([('option', wagtail.blocks.StructBlock([('answer', wagtail.blocks.RichTextBlock()), ('is_correct', wagtail.blocks.BooleanBlock(default=False, required=False))]))], blank=True, null=True, verbose_name='Alternativas')),
-                ('question_list', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='questions', to='questions.questionlist')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "sort_order",
+                    models.IntegerField(blank=True, editable=False, null=True),
+                ),
+                (
+                    "question",
+                    wagtail.fields.RichTextField(
+                        max_length=255, verbose_name="Enunciado da questão"
+                    ),
+                ),
+                (
+                    "answers",
+                    wagtail.fields.StreamField(
+                        [
+                            (
+                                "option",
+                                wagtail.blocks.StructBlock(
+                                    [
+                                        ("answer", wagtail.blocks.RichTextBlock()),
+                                        (
+                                            "is_correct",
+                                            wagtail.blocks.BooleanBlock(
+                                                default=False, required=False
+                                            ),
+                                        ),
+                                    ]
+                                ),
+                            )
+                        ],
+                        blank=True,
+                        null=True,
+                        verbose_name="Alternativas",
+                    ),
+                ),
+                (
+                    "question_list",
+                    modelcluster.fields.ParentalKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="questions",
+                        to="questions.questionlist",
+                    ),
+                ),
             ],
             options={
-                'ordering': ['sort_order'],
-                'abstract': False,
+                "ordering": ["sort_order"],
+                "abstract": False,
             },
         ),
     ]

@@ -12,36 +12,105 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('wagtailimages', '0026_delete_uploadedimage'),
-        ('wagtailcore', '0093_uploadedfile'),
-        ('wagtailsearch', '0008_remove_query_and_querydailyhits_models'),
-        ('questions', '0001_initial'),
+        ("wagtailimages", "0026_delete_uploadedimage"),
+        ("wagtailcore", "0093_uploadedfile"),
+        ("wagtailsearch", "0008_remove_query_and_querydailyhits_models"),
+        ("questions", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='HintPage',
+            name="HintPage",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.page')),
-                ('description', wagtail.fields.RichTextField(verbose_name='Descrição')),
-                ('is_active', models.BooleanField(default=True, verbose_name='Ativo')),
-                ('link', models.URLField(blank=True, null=True, verbose_name='Link')),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.page",
+                    ),
+                ),
+                ("description", wagtail.fields.RichTextField(verbose_name="Descrição")),
+                ("is_active", models.BooleanField(default=True, verbose_name="Ativo")),
+                ("link", models.URLField(blank=True, null=True, verbose_name="Link")),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
-            bases=('wagtailcore.page',),
+            bases=("wagtailcore.page",),
         ),
         migrations.CreateModel(
-            name='LandingPage',
+            name="LandingPage",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.page')),
-                ('popup', wagtail.fields.StreamField([('popup', wagtail.blocks.StructBlock([('active', wagtail.blocks.BooleanBlock(label='Ativo', required=False)), ('title', wagtail.blocks.CharBlock(label='Título', required=False)), ('text', wagtail.blocks.TextBlock(label='Texto do popup', required=False))], max_num=1, required=False))], blank=True, null=True)),
-                ('search_image', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.image', verbose_name='Search image')),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.page",
+                    ),
+                ),
+                (
+                    "popup",
+                    wagtail.fields.StreamField(
+                        [
+                            (
+                                "popup",
+                                wagtail.blocks.StructBlock(
+                                    [
+                                        (
+                                            "active",
+                                            wagtail.blocks.BooleanBlock(
+                                                label="Ativo", required=False
+                                            ),
+                                        ),
+                                        (
+                                            "title",
+                                            wagtail.blocks.CharBlock(
+                                                label="Título", required=False
+                                            ),
+                                        ),
+                                        (
+                                            "text",
+                                            wagtail.blocks.TextBlock(
+                                                label="Texto do popup", required=False
+                                            ),
+                                        ),
+                                    ],
+                                    max_num=1,
+                                    required=False,
+                                ),
+                            )
+                        ],
+                        blank=True,
+                        null=True,
+                    ),
+                ),
+                (
+                    "search_image",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="+",
+                        to="wagtailimages.image",
+                        verbose_name="Search image",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
-            bases=(wagtailmetadata.models.WagtailImageMetadataMixin, 'wagtailcore.page', models.Model),
+            bases=(
+                wagtailmetadata.models.WagtailImageMetadataMixin,
+                "wagtailcore.page",
+                models.Model,
+            ),
         ),
     ]

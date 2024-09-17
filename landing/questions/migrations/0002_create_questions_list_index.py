@@ -4,10 +4,11 @@ from django.db import migrations
 from home.models import LandingPage
 from questions.models import QuestionListIndex
 
+
 def create_question_list_index(apps, schema_editor):
     question_list_index = QuestionListIndex(
-        title="Question List Index",
-        slug="question-list-index",
+        title="Listas de Questões",
+        slug="listas",
         default_instructions="This is the default instructions for the question list index",
     )
     landing_page = LandingPage.objects.first()
@@ -24,9 +25,11 @@ def reverse_create_question_list_index(apps, schema_editor):
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('questions', '0001_initial'),
+        ("questions", "0001_initial"),
     ]
 
     operations = [
-        migrations.RunPython(create_question_list_index, reverse_create_question_list_index),
+        migrations.RunPython(
+            create_question_list_index, reverse_create_question_list_index
+        ),
     ]
