@@ -115,7 +115,7 @@ class QuestionList(Page):
 
 class QuestionListSubmission(models.Model):
     user = models.ForeignKey("users.CustomUser", on_delete=models.CASCADE)
-    questionsList = models.ForeignKey(
+    question_list = models.ForeignKey(
         "questions.QuestionList", on_delete=models.CASCADE
     )
     created_at = models.DateTimeField(auto_now_add=True)
@@ -127,7 +127,7 @@ class QuestionListSubmission(models.Model):
     result = models.JSONField(null=True, blank=True)
 
     def is_active(self):
-        duration = self.questionsList.duration
+        duration = self.question_list.duration
         return (
             not self.is_finished
             and self.created_at + timedelta(minutes=duration) > timezone.now()
