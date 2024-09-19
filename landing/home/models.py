@@ -46,7 +46,7 @@ class LandingPage(MetadataPageMixin, Page):
         context = super().get_context(request)
         active_submission = QuestionListSubmission.get_active_submissions(request.user)
         if active_submission:
-            active_list = active_submission.questionsList
+            active_list = active_submission.question_list
             context["active_list"] = active_list
         lists = QuestionList.objects.all()
         if lists:
