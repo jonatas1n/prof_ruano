@@ -29,7 +29,12 @@
               {% for field in form %}
                 {% if forloop.counter != 1 %}
                   <div class="question">
-                      <div class="question__title">{{ forloop.counter0 }}. {{ field.label|richtext }}</div>
+                      <div class="question__title">{{ forloop.counter0 }}. {{ field.label.label|richtext }}</div>
+                      <div class="question__subjects">
+                        {% for subject in field.label.subjects %}
+                          <div class="question__subject">{{ subject }}</div>
+                        {% endfor %}
+                      </div>
                       <div class="question__options">
                         {% for option in field %}
                           <label class="question__option" for="{{ option.id_for_label }}">

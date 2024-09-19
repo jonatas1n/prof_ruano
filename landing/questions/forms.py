@@ -13,23 +13,24 @@ class QuestionListForm(forms.ModelForm):
 
         if questions:
             for question in questions:
+                subjects = [subject.name for subject in question.subjects.all()]
+
                 get_answer = lambda answer: (answer.value.get("answer"), answer.value)
                 choices = [get_answer(answer) for answer in question.answers]
-                print(choices)
+
                 self.fields[f"question_{question.id}"] = forms.ChoiceField(
-                    label=question.question,
+                    label={'label': question.question, 'subjects': subjects},
                     choices=choices,
                     widget=forms.RadioSelect,
                 )
 
-    def save(self, commit=True):
-        submission = super().save(commit=False)
+    def save(self, submission_id=None):
+        submission = QuestionListSubmission.objects.get(pk=submission_id)
         submission.answers = {
             field: self.cleaned_data[field]
             for field in self.cleaned_data
             if field.startswith("question_")
         }
-
-        if commit:
-            submission.save()
+        submission.is_finished = True
+        submission.save()
         return submission

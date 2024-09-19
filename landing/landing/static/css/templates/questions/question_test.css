@@ -24,6 +24,22 @@ body {
   gap: .5rem;
 }
 
+.question__subjects {
+  display: flex;
+  gap: .5rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  font-weight: 900;
+  color: var(--light-bg);
+  font-size: .75rem;
+}
+
+.question__subject {
+  background-color: var(--dark-bg);
+  padding: .125rem .5rem;
+  border-radius: 100vmax;
+}
+
 .question {
   display: grid;
   gap: .5rem;
@@ -73,8 +89,7 @@ form > button {
 .question__title {
   display: flex;
   gap: .5rem;
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+  font-size: 1.25rem;
 }
 
 .question p {

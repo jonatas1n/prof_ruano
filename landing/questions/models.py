@@ -3,7 +3,10 @@ from wagtail.models import Page, Orderable
 from modelcluster.fields import ParentalKey
 from wagtail.fields import RichTextField, StreamField
 from wagtail.admin.panels import FieldPanel, InlinePanel
-from wagtail.blocks import BooleanBlock, StructBlock, RichTextBlock, CharBlock
+from wagtail.blocks import BooleanBlock, StructBlock, CharBlock
+from taggit.models import TaggedItemBase
+from modelcluster.tags import ClusterTaggableManager
+from modelcluster.models import ClusterableModel
 
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -11,6 +14,7 @@ from django.shortcuts import redirect
 from django.utils import timezone
 
 from datetime import timedelta
+import unicodedata
 
 
 class QuestionListIndex(Page):
@@ -43,9 +47,24 @@ class QuestionListIndex(Page):
         return super().serve(request, *args, **kwargs)
 
 
-class QuestionItem(Orderable):
+class QuestionItemSubject(TaggedItemBase):
+    content_object = ParentalKey(
+        "QuestionItem", related_name="tagged_items", on_delete=models.CASCADE
+    )
+
+    def save(self, *args, **kwargs):
+        normalized_text = unicodedata.normalize("NFD", self.tag.name)
+        self.tag.name = "".join(
+            c for c in normalized_text if unicodedata.category(c) != "Mn"
+        )
+        super().save(*args, **kwargs)
+
+
+class QuestionItem(ClusterableModel, Orderable):
     question_list = ParentalKey("questions.QuestionList", related_name="questions")
     question = RichTextField(max_length=255, verbose_name="Enunciado da questão")
+    subjects = ClusterTaggableManager(through=QuestionItemSubject, blank=True)
+
     answers = StreamField(
         [
             (
@@ -67,6 +86,7 @@ class QuestionItem(Orderable):
 
     panels = [
         FieldPanel("question"),
+        FieldPanel("subjects"),
         FieldPanel("answers"),
     ]
 
@@ -148,4 +168,4 @@ class QuestionListSubmission(models.Model):
         return None
 
     def __str__(self):
-        return f"{self.user.email} - {self.questionsList.title}"
+        return f"{self.user.email} - {self.question_list.title}"
