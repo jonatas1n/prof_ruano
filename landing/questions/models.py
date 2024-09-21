@@ -7,17 +7,20 @@ from wagtail.blocks import BooleanBlock, StructBlock, CharBlock
 from taggit.models import TaggedItemBase
 from modelcluster.tags import ClusterTaggableManager
 from modelcluster.models import ClusterableModel
+from wagtail.contrib.routable_page.models import RoutablePageMixin, path
 
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.shortcuts import redirect
 from django.utils import timezone
 
+from questions import views as questions_views
+
 from datetime import timedelta
 import unicodedata
 
 
-class QuestionListIndex(Page):
+class QuestionListIndex(RoutablePageMixin, Page):
     parent_page_types = ["home.LandingPage"]
     is_creatable = False
 
@@ -43,9 +46,19 @@ class QuestionListIndex(Page):
     ]
 
     @method_decorator(login_required)
-    def serve(self, request, *args, **kwargs):
-        return super().serve(request, *args, **kwargs)
-
+    @path("start/<int:question_list_id>/", name="start")
+    def start(self, request, question_list_id):
+        return questions_views.start(request, question_list_id)
+    
+    @method_decorator(login_required)
+    @path("test/<int:question_list_id>/", name="test")
+    def test(self, request, question_list_id):
+        return questions_views.test(request, question_list_id)
+    
+    @method_decorator(login_required)
+    @path("submit/<int:question_list_id>/", name="submit")
+    def submit(self, request, question_list_id):
+        return questions_views.submit(request, question_list_id)
 
 class QuestionItemSubject(TaggedItemBase):
     content_object = ParentalKey(
@@ -130,7 +143,8 @@ class QuestionList(Page):
         active_submission = QuestionListSubmission.get_active_submissions(request.user)
         if active_submission:
             active_list = active_submission.questionsList
-            return redirect("/questions/" + str(active_list.id))
+            return redirect(f"/questions/{active_list.id}")
+        return redirect(f"/questions/{self.id}")
 
 
 class QuestionListSubmission(models.Model):
