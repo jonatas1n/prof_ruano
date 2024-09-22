@@ -42,18 +42,14 @@
             <div class="chart__item lists">
                 <div class="chart__item__title">Suas últimas listas</div>
                 <ul class="lists__content">
-                    <li class="list" id="list-item-12" data-list-id="12">
-                        <div class="list__date">17/06/24</div>
-                        <div class="list__grade">28/30</div>
-                    </li>
-                    <li class="list" id="list-item-13" data-list-id="13">
-                        <div class="list__date">17/06/24</div>
-                        <div class="list__grade">28/30</div>
-                    </li>
-                    <li class="list" id="list-item-14" data-list-id="14">
-                        <div class="list__date">17/06/24</div>
-                        <div class="list__grade">28/30</div>
-                    </li>
+                    {% for list in stats.last_submissions %}
+                        <li class="list" id="list-item-{{ list.id }}" data-list-id="{{ list.id }}">
+                            <button>
+                                <div class="list__date">{{list.name}} {{ list.created_at|date:"d/m/y" }} {{ list.created_at|time:"H:mm:ss" }} </div>
+                                <div class="list__grade">28/30</div>
+                            </button>
+                        </li>
+                    {% endfor %}
                 </ul>
             </div>
             <div class="chart__item time">

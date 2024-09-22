@@ -1,6 +1,6 @@
 from django import forms
 from questions.models import QuestionListSubmission
-
+from django.utils import timezone
 
 class QuestionListForm(forms.ModelForm):
     class Meta:
@@ -32,5 +32,7 @@ class QuestionListForm(forms.ModelForm):
             if field.startswith("question_")
         }
         submission.is_finished = True
+        submission.finished_at = timezone.now()
+        submission.set_result()
         submission.save()
         return submission

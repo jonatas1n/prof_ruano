@@ -8,8 +8,6 @@ from wagtail.blocks import (
     TextBlock,
     StructBlock,
     CharBlock,
-    PageChooserBlock,
-    URLBlock,
 )
 from wagtail.admin.panels import FieldPanel
 from questions.models import QuestionList, QuestionListIndex, QuestionListSubmission
@@ -17,7 +15,30 @@ from questions.models import QuestionList, QuestionListIndex, QuestionListSubmis
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
+def get_stats(user):
+    # get_time = lambda submission: submission.finished_at - submission.created_at
+    get_results = lambda submission: submission.result
+    def get_subjects(submission):
+        subjects = []
+        for question in submission.question_list.questions.all():
+            subjects += [subject.name for subject in question.subjects.all()]
+        subjects = list(set(subjects))
+        return subjects
 
+    submissions = QuestionListSubmission.objects.filter(user=user, is_finished=True)
+    last_submissions = submissions.order_by("-finished_at")[:15]
+    total = submissions.count()
+
+    # average_time = [get_time(submission) for submission in submissions if submission]
+    # average_time = sum(average_time) / len(average_time) if average_time else 0
+
+    results = [get_results(submission) for submission in submissions]
+
+    subjects = [get_subjects(submission) for submission in submissions]
+    subjects = sum(subjects, [])
+    subjects = list(set(subjects))
+
+    return {"last_submissions": last_submissions, "total": total, "average_time": "234343242", "subjects": subjects}
 class LandingPage(MetadataPageMixin, Page):
     is_creatable = False
     max_count = 1
@@ -52,6 +73,7 @@ class LandingPage(MetadataPageMixin, Page):
         if lists:
             context["lists"] = lists
             context["lists_slug"] = QuestionListIndex.objects.first().slug
+        context["stats"] = get_stats(request.user)
         context["hints"] = HintPage.objects.filter(is_active=True)
         return context
 

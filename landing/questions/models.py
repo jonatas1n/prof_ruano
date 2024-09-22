@@ -180,6 +180,16 @@ class QuestionListSubmission(models.Model):
                 return user_submission
 
         return None
+    
+    def set_result(self):
+        questions = self.question_list.questions.all()
+        self.result = {
+            question.id: {
+                "correct": question.answers.filter(is_correct=True).first().value
+            }
+            for question in questions
+        }
+        self.save()
 
     def __str__(self):
         return f"{self.user.email} - {self.question_list.title}"
