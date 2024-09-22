@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static i18n wagtailcore_tags wagtailimages_tags wagtailmetadata_tags %}
+{% load static i18n wagtailcore_tags wagtailimages_tags wagtailmetadata_tags stats %}
 
 {% block meta_tag %}
     {% meta_tags %}
@@ -8,7 +8,6 @@
 {% block content %}
 
 <link rel="stylesheet" type="text/css" href="{% static 'css/templates/home/home.css' %}">
-<link rel="stylesheet" type="text/css" href="{% static 'css/templates/home/chart.css' %}">
 <link rel="stylesheet" type="text/css" href="{% static 'css/components/modal.css' %}">
 
 <main class="container">
@@ -34,51 +33,7 @@
         </div>
     {% endif %}
 
-    <div class="chart fade-up">
-        <div class="chart__title fade-left">
-            Estatísticas
-        </div>
-        <div class="chart__board">
-            <div class="chart__item lists">
-                <div class="chart__item__title">Suas últimas listas</div>
-                <ul class="lists__content">
-                    {% for list in stats.last_submissions %}
-                        <li class="list" id="list-item-{{ list.id }}" data-list-id="{{ list.id }}">
-                            <button>
-                                <div class="list__date">{{list.name}} {{ list.created_at|date:"d/m/y" }} {{ list.created_at|time:"H:mm:ss" }} </div>
-                                <div class="list__grade">28/30</div>
-                            </button>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div class="chart__item time">
-                <div class="chart__item__title">Tempo médio por lista</div>
-                <div class="time__content">1:35:22s</div>
-            </div>
-            <div class="chart__item grade">
-                <div class="chart__item__title">% de acertos</div>
-                <div class="grade__content">
-                    <div class="grade__value">85%</div>
-                    <div class="grade__rate">90/120</div>
-                </div>
-            </div>
-            <div class="chart__item subjects">
-                <div class="chart__item__title">Assuntos mais errados</div>
-                <ol class="subjects__content">
-                    <li class="subject">Funções</li>
-                    <li class="subject">Geometria</li>
-                    <li class="subject">Probabilidade</li>
-                    <li class="subject">Funções</li>
-                    <li class="subject">Geometria</li>
-                    <li class="subject">Probabilidade</li>
-                    <li class="subject">Funções</li>
-                    <li class="subject">Geometria</li>
-                    <li class="subject">Probabilidade</li>
-                </ol>
-            </div>
-        </div>
-    </div>
+{% stats user=user %}
 </main>
 
 <div class="modal" id="hint__modal">

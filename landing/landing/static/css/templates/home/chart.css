@@ -1,4 +1,4 @@
-.chart__board {
+.chart__board, .no-items {
     display: grid;
     grid-auto-flow: column;
     grid-template-columns: repeat(5, 1fr);
@@ -7,7 +7,14 @@
     min-height: 30rem;
 }
 
-.chart__board.marked .chart__item:not(.lists) {
+.no-items {
+    grid-template-columns: none;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1rem;
+}
+
+.chart__board.marked .chart__item:not(.lists), .no-items {
     background-color: var(--secondary-blue);
 }
 
