@@ -23,7 +23,7 @@
 
         {{ errors }}
 
-        <form method="post" action="{{question_list.id}}/submit" class="test__questions">
+        <form method="post" action="submit" class="test__questions">
             {% csrf_token %}
             <div class="questions__content">
               {% for field in form %}
