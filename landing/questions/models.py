@@ -46,17 +46,17 @@ class QuestionListIndex(RoutablePageMixin, Page):
     ]
 
     @method_decorator(login_required)
-    @path("start/<int:question_list_id>/", name="start")
+    @path("<int:question_list_id>/", name="test")
+    def test(self, request, question_list_id):
+        return questions_views.test(request, question_list_id)
+
+    @method_decorator(login_required)
+    @path("<int:question_list_id>/start", name="start")
     def start(self, request, question_list_id):
         return questions_views.start(request, question_list_id)
     
     @method_decorator(login_required)
-    @path("test/<int:question_list_id>/", name="test")
-    def test(self, request, question_list_id):
-        return questions_views.test(request, question_list_id)
-    
-    @method_decorator(login_required)
-    @path("submit/<int:question_list_id>/", name="submit")
+    @path("<int:question_list_id>/submit", name="submit")
     def submit(self, request, question_list_id):
         return questions_views.submit(request, question_list_id)
 

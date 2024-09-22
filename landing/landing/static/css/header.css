@@ -3,7 +3,9 @@ header {
 }
 
 .header__content {
-    padding-block: 2rem;
+    background-color: var(--dark-bg);
+    border-radius: 0 0 1rem 1rem;
+    padding: 2rem 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;

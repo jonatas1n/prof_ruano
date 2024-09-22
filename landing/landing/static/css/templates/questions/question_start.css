@@ -1,0 +1,23 @@
+body {
+  background-color: white;
+  color: black;
+  height: 100vh;
+}
+
+#start {
+  display: flex;
+  justify-content: center;
+}
+
+.start__content {
+  padding: 4rem;
+  border-radius: 1rem;
+  border: 1px solid #e0e0e0;
+  display: grid;
+  gap: 2rem;
+  justify-items: center;
+}
+
+form button {
+  padding-inline: 2rem;
+}

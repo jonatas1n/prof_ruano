@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static i18n wagtailcore_tags wagtailimages_tags %}
+{% load static i18n wagtailcore_tags wagtailimages_tags wagtailroutablepage_tags %}
 
 {% block content %}
 
@@ -18,7 +18,7 @@
             <div class="lists__board">
                 <div class="list">
                     {% for list_item in lists %}
-                        <a href="/questions/{{list_item.id}}" class="list__item">
+                        <a href="{% routablepageurl page 'test' list_item.id %}" class="list__item">
                             <button {% if active_list %}disabled{% endif %}>
                                 {{list_item.title}}
                             </button>

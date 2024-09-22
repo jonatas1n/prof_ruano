@@ -1,17 +1,15 @@
-from django.shortcuts import redirect, render, get_object_or_404
-from questions.models import QuestionList, QuestionListSubmission
-from questions.forms import QuestionListForm
+from django.shortcuts import redirect, render
 
+def start(request, question_list_id):
+    from questions.models import QuestionList, QuestionListSubmission
 
-def start(request, question_list):
     active_submission = QuestionListSubmission.get_active_submissions(request.user)
-
     if active_submission:
         return redirect(
-            "questions:test", question_list_id=active_submission.question_list.id
+            "listas:test", question_list_id=active_submission.question_list.id
         )
 
-    question_list = QuestionList.objects.get(pk=question_list.id)
+    question_list = QuestionList.objects.get(pk=question_list_id)
     if request.method == "GET":
         return render(
             request,
@@ -21,16 +19,19 @@ def start(request, question_list):
 
     QuestionListSubmission(user=request.user, question_list=question_list).save()
 
-    return redirect("questions:test", question_list_id=question_list.id)
+    return redirect("listas:test", question_list_id=question_list_id)
 
 
 def test(request, question_list_id):
+    from questions.models import QuestionListSubmission
+    from questions.forms import QuestionListForm
+
     active_submission = QuestionListSubmission.get_active_submissions(request.user)
     if not active_submission:
-        return redirect("questions:start", question_list_id=question_list_id)
+        return redirect("listas:start", question_list_id=question_list_id)
 
     if active_submission.question_list.id != int(question_list_id):
-        return redirect("questions:test", question_list_id=question_list_id)
+        return redirect("listas:test", question_list_id=question_list_id)
 
     question_list = active_submission.question_list
     questions = question_list.questions.all()
@@ -43,15 +44,18 @@ def test(request, question_list_id):
 
 
 def submit(request, question_list_id):
+    from questions.models import QuestionListSubmission
+    from questions.forms import QuestionListForm
+
     if request.method == "GET":
         return redirect("questions")
 
     active_submission = QuestionListSubmission.get_active_submissions(request.user)
     if not active_submission:
-        return redirect("questions:start", question_list_id=question_list_id)
+        return redirect("listas:start", question_list_id=question_list_id)
 
     if active_submission.question_list.id != int(question_list_id):
-        return redirect("questions:test", question_list_id=question_list_id)
+        return redirect("listas:test", question_list_id=question_list_id)
 
     question_list = active_submission.question_list
     questions = question_list.questions.all()
