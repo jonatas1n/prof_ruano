@@ -54,11 +54,22 @@ class QuestionListIndex(RoutablePageMixin, Page):
     @path("<int:question_list_id>/start", name="start")
     def start(self, request, question_list_id):
         return questions_views.start(request, question_list_id)
-    
+
     @method_decorator(login_required)
     @path("<int:question_list_id>/submit", name="submit")
     def submit(self, request, question_list_id):
         return questions_views.submit(request, question_list_id)
+    
+    @method_decorator(login_required)
+    @path("submission/<int:submission_id>/", name="submission")
+    def get_submission_data(self, request, submission_id):
+        return questions_views.get_submission_data(request, submission_id)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = "listas"
+        super().save(*args, **kwargs)
+
 
 class QuestionItemSubject(TaggedItemBase):
     content_object = ParentalKey(
@@ -138,6 +149,12 @@ class QuestionList(Page):
     def get_answers(self, answers):
         pass
 
+    @property
+    def get_instructions(self):
+        if not self.instructions:
+            return self.get_parent().specific.default_instructions
+        return self.instructions
+
     @method_decorator(login_required)
     def serve(self, request, *args, **kwargs):
         active_submission = QuestionListSubmission.get_active_submissions(request.user)
@@ -180,15 +197,34 @@ class QuestionListSubmission(models.Model):
                 return user_submission
 
         return None
-    
+
     def set_result(self):
-        questions = self.question_list.questions.all()
-        self.result = {
-            question.id: {
-                "correct": question.answers.filter(is_correct=True).first().value
-            }
-            for question in questions
-        }
+        result = {"questions": [], "total": 0, "correct": 0, "incorrect": 0}
+
+        question_list = self.question_list
+        for question_item in question_list.questions.all():
+            user_answer = self.answers.get(str(question_item.id))
+            correct_answer = None
+            for answer in question_item.answers:
+                if answer.value.get("is_correct"):
+                    correct_answer = answer.value.get("answer")
+                    break
+
+            is_correct = user_answer == correct_answer
+            result["questions"].append(
+                {
+                    "id": question_item.id,
+                    "user_answer": user_answer,
+                    "correct_answer": correct_answer,
+                    "is_correct": is_correct,
+                }
+            )
+
+            result["total"] += 1
+            result["correct"] += 1 if is_correct else 0
+            result["incorrect"] += 1 if not is_correct else 0
+
+        self.result = result
         self.save()
 
     def __str__(self):

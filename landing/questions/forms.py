@@ -2,6 +2,7 @@ from django import forms
 from questions.models import QuestionListSubmission
 from django.utils import timezone
 
+
 class QuestionListForm(forms.ModelForm):
     class Meta:
         model = QuestionListSubmission
@@ -19,7 +20,7 @@ class QuestionListForm(forms.ModelForm):
                 choices = [get_answer(answer) for answer in question.answers]
 
                 self.fields[f"question_{question.id}"] = forms.ChoiceField(
-                    label={'label': question.question, 'subjects': subjects},
+                    label={"label": question.question, "subjects": subjects},
                     choices=choices,
                     widget=forms.RadioSelect,
                 )

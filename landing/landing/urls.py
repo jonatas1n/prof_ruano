@@ -15,7 +15,7 @@ urlpatterns = [
     path("documents/", include(wagtaildocs_urls)),
     path("auth/", include("users.urls")),
     path("sitemap.xml", sitemap),
-    path('listas/', include('questions.urls')),
+    path("listas/", include("questions.urls")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

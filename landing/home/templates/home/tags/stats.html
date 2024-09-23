@@ -1,44 +1,50 @@
 {% load static %}
 
-<link rel="stylesheet" type="text/css" href="{% static 'css/templates/home/chart.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/templates/home/stats.css' %}">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
-<div class="chart fade-up">
-    <div class="chart__title fade-left">
+
+<div class="stats fade-up">
+    <div class="stats__title fade-left">
         Estatísticas
     </div>
-    {% if last_submissions %}
-        <div class="chart__board">
-            <div class="chart__item lists">
-                <div class="chart__item__title">Suas últimas listas</div>
+    {% if submissions %}
+        <div class="stats__board">
+            <div class="stats__item lists">
+                <div class="stats__item__title">Suas últimas listas</div>
                 <ul class="lists__content">
-                    {% for list in last_submissions %}
-                        <li class="list" id="list-item-{{ list.id }}" data-list-id="{{ list.id }}">
-                            <button>
-                                <div class="list__date">{{list.name}} {{ list.created_at|date:"d/m/y" }} {{ list.created_at|time:"H:mm:ss" }} </div>
-                                <div class="list__grade">28/30</div>
-                            </button>
+                    {% for list in submissions %}
+                        <li class="list" onclick="markList('{{list.id}}')" id="list-item-{{ list.id }}" data-list-id="{{ list.id }}">
+                            <div class="list__date">{{list.question_list.title}}</div>
+                            <div class="list__grade"><small>{{ list.created_at|date:"d/m, H\hm" }}</small> | 28/30</div>
                         </li>
                     {% endfor %}
                 </ul>
             </div>
-            <div class="chart__item time">
-                <div class="chart__item__title">Tempo médio por lista</div>
-                <div class="time__content">1:35:22s</div>
+            <div class="stats__item time">
+                <div class="stats__item__title">Tempo médio por lista</div>
+                <div class="time__content">{{ average_time }}</div>
+                <div class="time__hide"></div>
             </div>
-            <div class="chart__item grade">
-                <div class="chart__item__title">% de acertos</div>
+            <div class="stats__item grade">
+                <div class="stats__item__title">% de acertos</div>
                 <div class="grade__content">
-                    <div class="grade__value">85%</div>
-                    <div class="grade__rate">90/120</div>
+                    <div class="grade__value">{{ corrects }}%</div>
+                    <div class="grade__hide"></div>
+                    <div class="grade__rate"></div>
                 </div>
             </div>
-            <div class="chart__item subjects">
-                <div class="chart__item__title">Assuntos mais errados</div>
-                <ol class="subjects__content">
-                    {% for subject in most_mistaken_subjects %}
-                        <li class="subject">{{ subject }}</li>
-                    {% endfor %}
-                </ol>
+            <div class="stats__item subjects">
+                {% if subjects %}
+                    <div class="stats__item__title">Assuntos mais errados</div>
+                    <ol class="subjects__content">
+                        {% for subject in subjects %}
+                            <li class="subject">{{ subject }}</li>
+                        {% endfor %}
+                    </ol>
+                {% else %}
+                    <p>Você acertou todas as questões!<br> Continue assim...</p>
+                {% endif %}
             </div>
         </div>
     {% else %}
@@ -48,3 +54,5 @@
         </div>
     {% endif %}
 </div>
+
+<script src="{% static 'js/tags/stats.js' %}"></script>
