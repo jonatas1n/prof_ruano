@@ -3,6 +3,7 @@ from django.http import JsonResponse
 
 from questions.util import format_time
 
+
 def start(request, question_list_id):
     from questions.models import QuestionList, QuestionListSubmission
 
@@ -74,11 +75,12 @@ def submit(request, question_list_id):
         {"form": form, "question_list": question_list, "errors": form.errors},
     )
 
+
 def get_submission_data(request, submission_id):
     from questions.models import QuestionListSubmission
 
     submission = QuestionListSubmission.objects.get(pk=submission_id)
-    correct_questions = str(float(submission.result["correct"])) + '%'
+    correct_questions = str(float(submission.result["correct"])) + "%"
     time = (submission.finished_at - submission.created_at).total_seconds()
 
     return JsonResponse(

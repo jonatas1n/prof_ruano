@@ -59,7 +59,7 @@ class QuestionListIndex(RoutablePageMixin, Page):
     @path("<int:question_list_id>/submit", name="submit")
     def submit(self, request, question_list_id):
         return questions_views.submit(request, question_list_id)
-    
+
     @method_decorator(login_required)
     @path("submission/<int:submission_id>/", name="submission")
     def get_submission_data(self, request, submission_id):

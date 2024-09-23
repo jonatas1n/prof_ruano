@@ -31,7 +31,9 @@ def stats(user):
             submission.finished_at - submission.created_at
         ).total_seconds()
 
-        average_time = [get_time(submission) for submission in submissions if submission]
+        average_time = [
+            get_time(submission) for submission in submissions if submission
+        ]
         average_time = sum(average_time) / len(average_time) if average_time else 0
         average_time = format_time(average_time)
 
