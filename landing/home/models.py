@@ -17,7 +17,6 @@ from django.utils.decorators import method_decorator
 
 
 class LandingPage(MetadataPageMixin, Page):
-    is_creatable = False
     max_count = 1
 
     popup = StreamField(
