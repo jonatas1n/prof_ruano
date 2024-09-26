@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: prof_ruano
+    env: python
+    buildCommand: ./build.sh
+    startCommand: poetry run python manage.py migrate && gunicorn landing.wsgi --bind 0.0.0.0:$PORT
+    envVars:
+      - key: POSTGRES_PORT
+        value: "5656"
+      - key: POSTGRES_DB
+        value: "prof_ruano"
+      - key: POSTGRES_USER
+        value: "root"
+      - key: POSTGRES_PASSWORD
+        value: "adminroot"
+      - key: POSTGRES_HOST
+        value: "prof_ruano_db"
+    healthCheckPath: "/"
+    autoDeploy: true
+
+databases:
+  - name: prof_ruano
+    databaseName: prof_ruano
+    user: root
