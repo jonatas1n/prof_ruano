@@ -18,6 +18,8 @@ def stats(user):
 
     subjects = []
     total = 0
+    average_time = None
+    corrects = None
 
     submissions = QuestionListSubmission.objects.filter(
         user=user, is_finished=True
