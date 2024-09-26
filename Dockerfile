@@ -13,4 +13,4 @@ EXPOSE 8000
 RUN poetry run python manage.py findstatic .
 RUN poetry run python manage.py collectstatic --noinput
 
-CMD poetry run python manage.py migrate && poetry run python manage.py extract && poetry run gunicorn landing.wsgi:application --bind 0.0.0.0:$PORT
+CMD poetry run python manage.py migrate && poetry run gunicorn landing.wsgi:application --bind 0.0.0.0:$PORT
