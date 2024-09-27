@@ -6,6 +6,7 @@ from questions.models import QuestionListIndex
 
 
 def create_question_list_index(apps, schema_editor):
+    pass
     question_list_index = QuestionListIndex(
         title="Listas de Questões",
         slug="listas",
