@@ -22,7 +22,7 @@ import unicodedata
 
 class QuestionListIndex(RoutablePageMixin, Page):
     parent_page_types = ["home.LandingPage"]
-    is_creatable = False
+    max_count = 1
 
     default_instructions = RichTextField(
         max_length=255,
