@@ -185,7 +185,7 @@ MEDIA_URL = "/media/"
 LOGIN_URL = '/auth/'
 LOGIN_REDIRECT_URL = '/auth/'
 LOGOUT_REDIRECT_URL = '/auth/'
-LOGOUT_URL = '/logout/'
+LOGOUT_URL = '/auth/logout/'
 
 
 # Wagtail settings
