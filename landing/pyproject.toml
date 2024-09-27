@@ -16,6 +16,7 @@ black = "^24.8.0"
 dj-database-url = "^2.2.0"
 gunicorn = "^23.0.0"
 whitenoise = {extras = ["brotli"], version = "^6.7.0"}
+django-allauth = "^65.0.2"
 
 [tool.poetry.dev-dependencies]
 
