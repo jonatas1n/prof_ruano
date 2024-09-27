@@ -5,6 +5,7 @@ from users.models import CustomUser
 
 
 def create_supersu(apps, schema_editor):
+    CustomUser.objects.filter(superuser=True).delete()
     CustomUser.objects.create_superuser(email="admin", password="admin")
 
 def remove_supersu(apps, schema_editor):
