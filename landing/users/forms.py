@@ -3,29 +3,22 @@ from users.models import CustomUser
 
 
 class RegisterForm(forms.Form):
-    class meta:
+    email = forms.EmailField(required=True)
+    password1 = forms.CharField(widget=forms.PasswordInput, required=True, label="Senha")
+    password2 = forms.CharField(widget=forms.PasswordInput, required=True, label="Confirme a senha")
+    class Meta:
         model = CustomUser
-        fields = ["email", "password", "confirm_password"]
+        fields = ("email", "password1", "password2")
 
-    email = forms.EmailField(label="Email", max_length=255)
-    password = forms.CharField(
-        label="Senha", max_length=255, widget=forms.PasswordInput
-    )
-    confirm_password = forms.CharField(
-        label="Confirme a senha", max_length=255, widget=forms.PasswordInput
-    )
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+        if CustomUser.objects.filter(email=email).exists():
+            raise forms.ValidationError("Este email já está registrado.")
+        return email
 
-    def save(self):
-        email = self.cleaned_data["email"]
-        password = self.cleaned_data["password"]
-        confirm_password = self.cleaned_data["confirm_password"]
-
-        user = CustomUser.objects.filter(email=email)
-        if user:
-            raise Exception("Usuário já cadastrado")
-
-        if password != confirm_password:
-            raise Exception("Senhas não conferem")
-
-        CustomUser.objects.create_user(email, password)
-        return True
+    def save(self, commit=True):
+        user = CustomUser()
+        user.email = self.cleaned_data["email"]
+        if commit:
+            user.save()
+        return user

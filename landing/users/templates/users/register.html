@@ -15,11 +15,11 @@
     </div>
     <div class="login__container fade-up">
       <h3>Cadastro</h3>
-      <ul class="errors">
+      {% comment %} <ul class="errors">
         {% for error in errors %}
           <li>{{ error }}</li>
         {% endfor %}
-      </ul>
+      </ul> {% endcomment %}
       <form method="post">
         {% csrf_token %}
         <div class="fields">
