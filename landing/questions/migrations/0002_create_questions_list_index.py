@@ -6,15 +6,15 @@ from questions.models import QuestionListIndex
 
 
 def create_question_list_index(apps, schema_editor):
-    pass
     question_list_index = QuestionListIndex(
         title="Listas de Questões",
         slug="listas",
         default_instructions="This is the default instructions for the question list index",
     )
     landing_page = LandingPage.objects.first()
-    landing_page.add_child(instance=question_list_index)
-    landing_page.save()
+    if landing_page:
+        landing_page.add_child(instance=question_list_index)
+        landing_page.save()
 
 
 def reverse_create_question_list_index(apps, schema_editor):
