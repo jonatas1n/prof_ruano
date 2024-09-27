@@ -369,26 +369,6 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
-name = "django-allauth"
-version = "0.63.3"
-description = "Integrated set of Django applications addressing authentication, registration, account management as well as 3rd party (social) account authentication."
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "django_allauth-0.63.3.tar.gz", hash = "sha256:2374164c468a309e6badf70bc3405136df6036f24a20a13387f2a063066bdaa9"},
-]
-
-[package.dependencies]
-Django = ">=3.2"
-
-[package.extras]
-mfa = ["qrcode (>=7.0.0)"]
-openid = ["python3-openid (>=3.0.8)"]
-saml = ["python3-saml (>=1.15.0,<2.0.0)"]
-socialaccount = ["pyjwt[crypto] (>=1.7)", "requests (>=2.0.0)", "requests-oauthlib (>=0.3.0)"]
-steam = ["python3-openid (>=3.0.8)"]
-
-[[package]]
 name = "django-environ"
 version = "0.11.2"
 description = "A package that allows you to utilize 12factor inspired environment variables to configure your Django application."
@@ -1074,4 +1054,4 @@ wand = ["Wand (>=0.6,<1.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "e1ef1769084002df666739884b15c02b796bf03a11be5e0a1ff2fdc500fe4327"
+content-hash = "c9f42df70a16bcdb4667fa8750a545d0ffa8b58ea915dc9617fb1b5f1794a8b0"
