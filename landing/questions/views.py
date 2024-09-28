@@ -53,7 +53,7 @@ def submit(request, question_list_id):
     from questions.forms import QuestionListForm
 
     if request.method == "GET":
-        return redirect("questions")
+        return redirect("/listas")
 
     active_submission = QuestionListSubmission.get_active_submissions(request.user)
     if not active_submission:

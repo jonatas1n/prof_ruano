@@ -114,6 +114,12 @@ class QuestionItem(ClusterableModel, Orderable):
         FieldPanel("answers"),
     ]
 
+    @property
+    def correct_answer(self):
+        for answer in self.answers:
+            if answer.value.get("is_correct"):
+                return answer.value.get("answer")
+
 
 class QuestionList(Page):
     parent_page_types = ["questions.QuestionListIndex"]
@@ -141,13 +147,19 @@ class QuestionList(Page):
 
     class Meta:
         verbose_name = "Lista de Questões"
+        verbose_name_plural = "Listas de Questões"
 
     @property
     def list_size(self):
         return len(self.questions)
 
-    def get_answers(self, answers):
-        pass
+    def get_answers(self):
+        questions = self.questions.all()
+        answers = {}
+        for question in questions:
+            answers[question.id] = question.correct_answer
+        return answers
+
 
     @property
     def get_instructions(self):
@@ -206,24 +218,22 @@ class QuestionListSubmission(models.Model):
             return 0
         return remaining_seconds
 
-    def set_result(self):
+    def get_results(self):
         result = {"questions": [], "total": 0, "correct": 0, "incorrect": 0}
 
         question_list = self.question_list
+        correct_answers = question_list.get_answers()
         for question_item in question_list.questions.all():
-            user_answer = self.answers.get(str(question_item.id))
-            correct_answer = None
-            for answer in question_item.answers:
-                if answer.value.get("is_correct"):
-                    correct_answer = answer.value.get("answer")
-                    break
-
+            question_id = question_item.id
+            question = question_item.question
+            correct_answer = correct_answers[question_id]
+            user_answer = self.answers.get(f"question_{question_id}")
             is_correct = user_answer == correct_answer
             result["questions"].append(
                 {
-                    "id": question_item.id,
-                    "user_answer": user_answer,
+                    "question": question,
                     "correct_answer": correct_answer,
+                    "user_answer": user_answer,
                     "is_correct": is_correct,
                 }
             )
@@ -232,8 +242,7 @@ class QuestionListSubmission(models.Model):
             result["correct"] += 1 if is_correct else 0
             result["incorrect"] += 1 if not is_correct else 0
 
-        self.result = result
-        self.save()
+        return result
 
     def __str__(self):
         return f"{self.user.email} - {self.question_list.title}"

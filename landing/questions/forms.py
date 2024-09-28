@@ -27,13 +27,15 @@ class QuestionListForm(forms.ModelForm):
 
     def save(self, submission_id=None):
         submission = QuestionListSubmission.objects.get(pk=submission_id)
+        print(self.cleaned_data)
         submission.answers = {
-            field: self.cleaned_data[field]
+            field.id: self.cleaned_data[field]
             for field in self.cleaned_data
             if field.startswith("question_")
         }
         submission.is_finished = True
         submission.finished_at = timezone.now()
-        submission.set_result()
+        results = submission.get_results()
+        submission.result = results
         submission.save()
         return submission

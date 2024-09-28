@@ -41,7 +41,12 @@ def stats(user):
 
         results = [get_results(submission) for submission in submissions]
 
-        corrects = sum([result["correct"] for result in results]) / total
+        corrects = sum(
+            [result["correct"] for result in results if result], 0
+        )
+
+        total_questions = sum([result["total"] for result in results if result], 0)
+        corrects = (corrects / total_questions) * 100 if total_questions else 0
 
         subjects = [get_subjects(submission) for submission in submissions]
         subjects = sum(subjects, [])
