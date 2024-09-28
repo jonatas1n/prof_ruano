@@ -23,15 +23,16 @@
             </div>
             <div class="stats__item time">
                 <div class="stats__item__title">Tempo médio</div>
-                <div class="time__content">{{ average_time }}</div>
-                <div class="time__hide"></div>
+                <div class="time__content">
+                    <div class="time__value">{{ average_time }}</div>
+                    <div class="time__hide"></div>
+                </div>
             </div>
             <div class="stats__item grade">
                 <div class="stats__item__title">% de acertos</div>
                 <div class="grade__content">
                     <div class="grade__value">{{ corrects }}</div>
                     <div class="grade__hide"></div>
-                    <div class="grade__rate"></div>
                 </div>
             </div>
             <div class="stats__item subjects">

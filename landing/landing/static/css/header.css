@@ -16,6 +16,8 @@ header {
     color: white;
     font-style: italic;
     display: grid;
+    grid-column: column;
+    align-items: center;
     grid-template-columns: 1fr;
     grid-gap: .5rem;
     transition: 35s;
