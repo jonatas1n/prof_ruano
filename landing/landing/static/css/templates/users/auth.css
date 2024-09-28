@@ -5,7 +5,7 @@
 .auth__content {
     display: grid;
     grid-template-columns: auto 25rem;
-    grid-gap: 2rem;
+    gap: 2rem;
     min-height: 40rem;
     align-items: center;
 }
@@ -84,5 +84,6 @@
 @media screen and (max-width: 1200px) {
     .auth__content {
         grid-template-columns: 100%;
+        gap: 0;
     }
 }
