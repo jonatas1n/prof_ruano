@@ -73,7 +73,7 @@
     gap: 2rem;
 }
 
-:is(.time, .grade) :is([class*="__content"], [class*="__hide"]) {
+:is(.time, .grade, .subjects) :is([class*="__content"], [class*="__hide"]) {
     display: flex;
     justify-content: center;
     justify-items: center;
@@ -113,15 +113,19 @@
     font-size: 1.5rem;
 }
 
-.grade__hide, .time__hide {
+[class*="__hide"] {
     display: none;
 }
 
-.stats__board.marked :is(.grade__hide, .time__hide) {
+.stats__board.marked [class*="__hide"] {
     display: flex;
 }
 
 .stats__board.marked :is(.grade__value, .time__content) {
+    display: none;
+}
+
+.stats__board.marked .no__subjects {
     display: none;
 }
 
@@ -131,13 +135,11 @@
         grid-auto-flow: row;
     }
 
-
     .no__subjects {
         position: relative;
         top: 0;
         left: 0;
     }
-
 
     .stats__item {
         grid-column: span 2;

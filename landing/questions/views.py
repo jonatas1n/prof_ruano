@@ -44,7 +44,11 @@ def test(request, question_list_id):
     return render(
         request,
         "questions/question_test.html",
-        {"form": form, "question_list": question_list, "remaining_time": remaining_time},
+        {
+            "form": form,
+            "question_list": question_list,
+            "remaining_time": remaining_time,
+        },
     )
 
 
@@ -84,10 +88,15 @@ def get_submission_data(request, submission_id):
     correct_questions = submission.result["correct"] * 100 / submission.result["total"]
     correct_questions = f"{correct_questions:.2f}%"
     time = (submission.finished_at - submission.created_at).total_seconds()
+    subjects = submission.question_list.questions.values_list(
+        "subjects__name", flat=True
+    )
+    subjects = list(set(subjects))
 
     return JsonResponse(
         {
             "corrects": correct_questions,
             "time": format_time(time),
+            "subjects": subjects,
         }
     )

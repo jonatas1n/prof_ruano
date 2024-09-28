@@ -166,7 +166,6 @@ class QuestionList(Page):
             answers[question.id] = question.correct_answer
         return answers
 
-
     @property
     def get_instructions(self):
         if not self.instructions:
@@ -215,10 +214,12 @@ class QuestionListSubmission(models.Model):
                 return user_submission
 
         return None
-    
+
     def get_remaining_time(self):
         duration = self.question_list.duration
-        remaining_time = self.created_at + timedelta(minutes=duration) - timezone.localtime()
+        remaining_time = (
+            self.created_at + timedelta(minutes=duration) - timezone.localtime()
+        )
         remaining_seconds = remaining_time.total_seconds()
         if remaining_seconds < 0:
             return 0

@@ -4,8 +4,13 @@ from users.models import CustomUser
 
 class RegisterForm(forms.Form):
     email = forms.EmailField(required=True)
-    password1 = forms.CharField(widget=forms.PasswordInput, required=True, label="Senha")
-    password2 = forms.CharField(widget=forms.PasswordInput, required=True, label="Confirme a senha")
+    password1 = forms.CharField(
+        widget=forms.PasswordInput, required=True, label="Senha"
+    )
+    password2 = forms.CharField(
+        widget=forms.PasswordInput, required=True, label="Confirme a senha"
+    )
+
     class Meta:
         model = CustomUser
         fields = ("email", "password1", "password2")

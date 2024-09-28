@@ -13,7 +13,7 @@ SECRET_KEY = env("SECRET_KEY")
 ALLOWED_HOSTS = [env("HOST")]
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 

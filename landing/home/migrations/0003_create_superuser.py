@@ -8,6 +8,7 @@ def create_supersu(apps, schema_editor):
     CustomUser.objects.filter(is_superuser=True).delete()
     CustomUser.objects.create_superuser(email="admin", password="admin")
 
+
 def remove_supersu(apps, schema_editor):
     CustomUser.objects.filter(email="admin").delete()
 

@@ -22,7 +22,7 @@
                 </ul>
             </div>
             <div class="stats__item time">
-                <div class="stats__item__title">Tempo médio por lista</div>
+                <div class="stats__item__title">Tempo médio</div>
                 <div class="time__content">{{ average_time }}</div>
                 <div class="time__hide"></div>
             </div>
@@ -35,16 +35,16 @@
                 </div>
             </div>
             <div class="stats__item subjects">
-                {% if subjects %}
-                    <div class="stats__item__title">Assuntos mais errados</div>
-                    <ol class="subjects__content">
-                        {% for subject in subjects %}
-                            <li class="subject">{{ subject }}</li>
-                        {% endfor %}
-                    </ol>
-                {% else %}
-                <p class="no__subjects">Não há questões erradas ou os assuntos não foram definidos.</p>
-                {% endif %}
+                <div class="stats__item__title">Assuntos mais errados</div>
+                <ol class="subjects__content">
+                    {% for subject in subjects %}
+                        <li class="subject">{{ subject }}</li>
+                    {% endfor %}
+                    {% if not subjects %}
+                        <p class="no__subjects">Não há questões erradas ou os assuntos não foram definidos.</p>
+                        <div class="subjects__hide"></div>
+                    {% endif %}
+                </ol>
             </div>
         </div>
     {% else %}
