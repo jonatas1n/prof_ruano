@@ -99,3 +99,7 @@ form > button {
 .question__title p {
   margin-block: 0;
 }
+
+.counter__display {
+  font-size: 1.25rem;
+}
