@@ -11,7 +11,7 @@ from wagtail.contrib.routable_page.models import RoutablePageMixin, path
 
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.utils import timezone
 
 from questions import views as questions_views
@@ -34,6 +34,8 @@ class QuestionListIndex(RoutablePageMixin, Page):
     def get_context(self, request):
         context = super().get_context(request)
         context["lists"] = QuestionList.objects.live()
+        if not request.user.is_authenticated:
+            return context
         active_submission = QuestionListSubmission.get_active_submissions(request.user)
         if active_submission:
             active_list = active_submission.questionsList
@@ -44,6 +46,10 @@ class QuestionListIndex(RoutablePageMixin, Page):
     content_panels = Page.content_panels + [
         FieldPanel("default_instructions"),
     ]
+
+    @method_decorator(login_required)
+    def serve(self, request, view=None, args=None, kwargs=None):
+        return super().serve(request, view, args, kwargs)
 
     @method_decorator(login_required)
     @path("<int:question_list_id>/", name="test")

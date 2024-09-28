@@ -81,7 +81,8 @@ def get_submission_data(request, submission_id):
     from questions.models import QuestionListSubmission
 
     submission = QuestionListSubmission.objects.get(pk=submission_id)
-    correct_questions = str(float(submission.result["correct"])) + "%"
+    correct_questions = submission.result["correct"] * 100 / submission.result["total"]
+    correct_questions = f"{correct_questions:.2f}%"
     time = (submission.finished_at - submission.created_at).total_seconds()
 
     return JsonResponse(

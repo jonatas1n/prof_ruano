@@ -29,7 +29,7 @@ class QuestionListForm(forms.ModelForm):
         submission = QuestionListSubmission.objects.get(pk=submission_id)
         print(self.cleaned_data)
         submission.answers = {
-            field.id: self.cleaned_data[field]
+            field: self.cleaned_data[field]
             for field in self.cleaned_data
             if field.startswith("question_")
         }
