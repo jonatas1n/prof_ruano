@@ -138,6 +138,7 @@ a:hover {text-decoration: underline;}
 
 .container {
     width: 80%;
+    max-width: 1600px;
     height: 100%;
     margin-inline: auto;
 }
