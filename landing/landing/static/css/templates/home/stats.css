@@ -159,6 +159,10 @@
         align-content: center;
         gap: 2rem;
     }
+
+    .no-items {
+        padding-inline: 1rem;
+    }
 }
 
 @media screen and (max-width: 728px) {

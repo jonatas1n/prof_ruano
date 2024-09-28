@@ -19,6 +19,8 @@ from django.utils.decorators import method_decorator
 class LandingPage(MetadataPageMixin, Page):
     max_count = 1
 
+    video_url = models.URLField(verbose_name="URL do vídeo", null=True, blank=True)
+
     popup = StreamField(
         [
             (

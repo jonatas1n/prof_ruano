@@ -183,7 +183,7 @@ MEDIA_URL = "/media/"
 # All Auth
 
 LOGIN_URL = '/auth/'
-LOGIN_REDIRECT_URL = '/auth/'
+LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/auth/'
 LOGOUT_URL = '/auth/logout/'
 
