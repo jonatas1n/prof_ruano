@@ -81,10 +81,6 @@
     font-size: 4rem;
 }
 
-.grade {
-    padding-bottom: 3rem;
-}
-
 .grade__content {
     display: flex;
     flex-direction: column;
@@ -103,7 +99,6 @@
 
 .no__subjects {
     position: absolute;
-    width: 100%;
     top: 40%;
     left: 0%;
     text-align: center;
