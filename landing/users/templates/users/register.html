@@ -1,4 +1,7 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
 
 <link
   rel="stylesheet"
@@ -8,27 +11,29 @@
 
 <main>
   <div id="login" class="container">
-    <div class="video-container">
-      <iframe id="video"
-      src="https://www.youtube.com/embed/tgbNymZ7vqY">
-      </iframe>
-    </div>
-    <div class="login__container fade-up">
-      <h3>Cadastro</h3>
-      {% comment %} <ul class="errors">
-        {% for error in errors %}
-          <li>{{ error }}</li>
-        {% endfor %}
-      </ul> {% endcomment %}
-      <form method="post">
-        {% csrf_token %}
-        <div class="fields">
-          {{ form.as_p }}
-        <div class="login__buttons">
-          <a class="login__register" href="/auth">Já tem cadastro?</a>
-          <button type="submit" class="login__button">Registrar</button>
+    <div class="auth__content">
+      {% if video_url %}
+        <div class="video-container">
+          {{ video_url }}
         </div>
-      </form>
+      {% endif %}
+      <div class="login__container fade-up">
+        <h3>Cadastro</h3>
+        <ul class="errors">
+          {% for error in errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+        <form method="post">
+          {% csrf_token %}
+          <div class="fields">
+            {{ form.as_p }}
+          <div class="login__buttons">
+            <a class="login__register" href="/auth">Já tem cadastro?</a>
+            <button type="submit" class="login__button">Registrar</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </main>

@@ -5,7 +5,11 @@
 <main id="hint" class="container">
   <h3 class="hint__title">{{page.title}}</h3>
   <div class="hint__content">
-    <div class="hint__video"></div>
+    {% if page.link %}
+      <div class="hint__video">
+        <iframe src="{{ page.link }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    {% endif %}
     <div class="hint__sidebar">
       <div class="hint__description">
         <h4>{{page.title}}</h4>

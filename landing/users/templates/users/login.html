@@ -13,12 +13,10 @@
 
 <main>
   <div id="login" class="container">
-    <div class="login__content">
-      {% if page.videourl %}
+    <div class="auth__content">
+      {% if video_url %}
         <div class="video-container">
-          <iframe id="video"
-          src="{{page.video_url}}">
-          </iframe>
+          {{ video_url }}
         </div>
       {% endif %}
       <div class="login__container fade-up">

@@ -1,3 +1,7 @@
+.hint__video {
+    min-height: 12rem;
+}
+
 .hint__title {
     font-size: 1.5rem;
     margin-bottom: 2rem;
@@ -36,4 +40,10 @@
 
 .hint__button.previous {
     width: min-content;
+}
+
+@media screen and (max-width: 768px) {
+    .hint__content {
+        grid-template-columns: 1fr;
+    }
 }

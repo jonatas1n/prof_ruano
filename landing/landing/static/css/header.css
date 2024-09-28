@@ -59,6 +59,11 @@ header {
     display: inline-block;
 }
 
+.header__content .header__logo:last-child {
+    width: 100%;
+    text-align: center;
+}
+
 @media screen and (max-width: 620px) {
     .header__content {
         flex-direction: column;

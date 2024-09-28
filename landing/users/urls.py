@@ -1,12 +1,14 @@
 from django.urls import path
 from users.views import *
 from django.contrib.auth import views as auth_views
+from home.models import LandingPage
 
 urlpatterns = [
     path(
         "",
         auth_views.LoginView.as_view(
             template_name="users/login.html",
+            extra_context={"video_url": LandingPage.objects.first().get_video()},
         ),
         name="login",
     ),

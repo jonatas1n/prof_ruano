@@ -2,7 +2,7 @@
     display: block;
 }
 
-.login__content {
+.auth__content {
     display: grid;
     grid-template-columns: auto 25rem;
     grid-gap: 2rem;
@@ -17,6 +17,10 @@
     padding: 2rem 3rem;
     border-radius: 1rem;
     background-color: var(--mid-background);
+}
+
+.login__container:first-child {
+    grid-column-end: 1;
 }
 
 .login__container form p {
@@ -75,4 +79,10 @@
     font-weight: 700;
     padding: 1rem;
     border-radius: .5rem;
+}
+
+@media screen and (max-width: 1200px) {
+    .auth__content {
+        grid-template-columns: 100%;
+    }
 }
