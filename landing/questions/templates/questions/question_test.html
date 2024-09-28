@@ -10,9 +10,8 @@
     <div class="test__header">
         <h1 class="test__title">{{ test.title }}</h1>
         <div class="counter" data-duration="{{ test.duration }}" data-start="{{test.created_at}}">
-            <div class="counter__text">Tempo restante para o fim do prazo</div>
+            <div class="counter__text">Tempo restante para o término da lista</div>
             <div class="counter__display">00:00:00</div>
-            <div class="counter__total">Tempo Limite:</div>
         </div>
     </div>
 
@@ -53,5 +52,8 @@
 </div>
 
 <script type="text/javascript" src="{% static 'js/components/counter.js'%}"></script>
+<script>
+    startCounter({{remaining_time}})
+</script>
 
 {% endblock %}

@@ -39,11 +39,12 @@ def test(request, question_list_id):
 
     question_list = active_submission.question_list
     questions = question_list.questions.all()
+    remaining_time = active_submission.get_remaining_time()
     form = QuestionListForm(questions=questions)
     return render(
         request,
         "questions/question_test.html",
-        {"form": form, "question_list": question_list},
+        {"form": form, "question_list": question_list, "remaining_time": remaining_time},
     )
 
 

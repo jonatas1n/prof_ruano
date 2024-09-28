@@ -160,8 +160,8 @@ class QuestionList(Page):
         active_submission = QuestionListSubmission.get_active_submissions(request.user)
         if active_submission:
             active_list = active_submission.questionsList
-            return redirect(f"/questions/{active_list.id}")
-        return redirect(f"/questions/{self.id}")
+            return redirect(f"/listas/{active_list.id}")
+        return redirect(f"/listas/{self.id}")
 
 
 class QuestionListSubmission(models.Model):
@@ -197,6 +197,14 @@ class QuestionListSubmission(models.Model):
                 return user_submission
 
         return None
+    
+    def get_remaining_time(self):
+        duration = self.question_list.duration
+        remaining_time = self.created_at + timedelta(minutes=duration) - timezone.localtime()
+        remaining_seconds = remaining_time.total_seconds()
+        if remaining_seconds < 0:
+            return 0
+        return remaining_seconds
 
     def set_result(self):
         result = {"questions": [], "total": 0, "correct": 0, "incorrect": 0}

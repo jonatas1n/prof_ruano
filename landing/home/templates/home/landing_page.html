@@ -12,7 +12,7 @@
 
 <main class="container">
     {% if active_list %}
-        <h3>Você está realizando a lista <a href="/questions/{{active_list.id}}">{{ active_list.title }}</a></h3>
+        <h3>Você está realizando a lista <a href="/listas/{{active_list.id}}">{{ active_list.title }}</a></h3>
     {% endif %}
     {% if hints or lists %}
         <div class="menu-top">
