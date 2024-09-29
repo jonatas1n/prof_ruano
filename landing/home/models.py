@@ -56,7 +56,10 @@ class LandingPage(MetadataPageMixin, Page):
 
     @staticmethod
     def get_video():
-        return LandingPage.objects.first().video_url
+        video_url = LandingPage.objects.first().video_url
+        if video_url:
+            return video_url
+        return None
 
     @method_decorator(login_required)
     def serve(self, request, *args, **kwargs):
