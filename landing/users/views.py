@@ -12,11 +12,10 @@ def login(request):
 class UserRegistrationView(View):
     form_class = RegisterForm
     template_name = "users/register.html"
-    home_video = LandingPage.objects.first().get_video()
 
     def get(self, request):
         form = self.form_class()
-        return render(request, self.template_name, {"form": form, "video_url": self.home_video})
+        return render(request, self.template_name, {"form": form})
 
     def post(self, request):
         form = self.form_class(request.POST)
@@ -25,4 +24,4 @@ class UserRegistrationView(View):
             messages.success(request, "Seu registro foi bem-sucedido!")
             return redirect("/")
 
-        return render(request, self.template_name, {"form": form, "video_url": self.home_video})
+        return render(request, self.template_name, {"form": form})
