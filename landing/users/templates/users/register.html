@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static intro_video %}
 
 {% block content %}
 
@@ -12,11 +12,7 @@
 <main>
   <div id="login" class="container">
     <div class="auth__content">
-      {% if video_url %}
-        <div class="video-container">
-          {{ video_url }}
-        </div>
-      {% endif %}
+      {% intro_video %}
       <div class="login__container fade-up">
         <h3>Cadastro</h3>
         <ul class="errors">

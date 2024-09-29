@@ -1,4 +1,7 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
+{% extends 'base.html' %}
+{% load static intro_video %}
+
+{% block content %}
 
 <link
   rel="stylesheet"
@@ -14,11 +17,7 @@
 <main>
   <div id="login" class="container">
     <div class="auth__content">
-      {% if video_url %}
-        <div class="video-container">
-          {{ video_url }}
-        </div>
-      {% endif %}
+      {% intro_video %}
       <div class="login__container fade-up">
         <h3>Login</h3>
         <form method="post">

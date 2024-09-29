@@ -54,13 +54,6 @@ class LandingPage(MetadataPageMixin, Page):
         context["hints"] = HintPage.objects.filter(is_active=True)
         return context
 
-    @staticmethod
-    def get_video():
-        video_url = LandingPage.objects.first().video_url
-        if video_url:
-            return video_url
-        return None
-
     @method_decorator(login_required)
     def serve(self, request, *args, **kwargs):
         return super().serve(request, *args, **kwargs)
