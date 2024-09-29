@@ -104,7 +104,6 @@ DATABASES = {
         default=os.environ.get('DATABASE_URL'),
         conn_max_age=600,
     )
-    
 }
 
 # DATABASES = {

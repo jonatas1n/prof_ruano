@@ -8,7 +8,6 @@ urlpatterns = [
         "",
         auth_views.LoginView.as_view(
             template_name="users/login.html",
-            extra_context={"video_url": LandingPage.objects.first().get_video()},
         ),
         name="login",
     ),
