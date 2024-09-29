@@ -6,8 +6,7 @@ from home.models import LandingPage
 
 
 def login(request):
-    home_video = LandingPage.objects.first().get_video()
-    return render(request, "users/login.html", { "video_url": home_video })
+    return render(request, "users/login.html")
 
 
 class UserRegistrationView(View):
