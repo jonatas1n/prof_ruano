@@ -23,9 +23,9 @@ function clearLists() {
 
 function clearListData() {
   changeTitles(false);
-  timeHideElem.innerHTML = '';
-  gradeHideElem.innerHTML = '';
-  subjectsHideElem.innerHTML = '';
+  if (timeHideElem) timeHideElem.innerHTML = '';
+  if (gradeHideElem) gradeHideElem.innerHTML = '';
+  if (subjectsHideElem) subjectsHideElem.innerHTML = '';
 }
 
 function changeTitles(selected=true) {
@@ -43,9 +43,9 @@ function changeTitles(selected=true) {
 function setListData(time, corrects, subjects) {
   clearListData();
   changeTitles();
-  timeHideElem.innerHTML = time;
-  gradeHideElem.innerHTML = corrects;
-  subjectsHideElem.innerHTML = subjects;
+  if (timeHideElem) timeHideElem.innerHTML = time;
+  if (gradeHideElem) gradeHideElem.innerHTML = corrects;
+  if (subjectsHideElem) subjectsHideElem.innerHTML = subjects;
 }
 
 function getListData(listID) { 

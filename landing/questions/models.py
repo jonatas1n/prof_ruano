@@ -33,7 +33,7 @@ class QuestionListIndex(RoutablePageMixin, Page):
 
     def get_context(self, request):
         context = super().get_context(request)
-        context["lists"] = QuestionList.objects.live()
+        context["lists"] = QuestionList.objects.all()
         if not request.user.is_authenticated:
             return context
         active_submission = QuestionListSubmission.get_active_submissions(request.user)
@@ -93,7 +93,7 @@ class QuestionItemSubject(TaggedItemBase):
 class QuestionItem(ClusterableModel, Orderable):
     question_list = ParentalKey("questions.QuestionList", related_name="questions")
     question = RichTextField(max_length=255, verbose_name="Enunciado da questão")
-    subjects = ClusterTaggableManager(through=QuestionItemSubject, blank=True)
+    subjects = ClusterTaggableManager(through=QuestionItemSubject, blank=True, verbose_name="Assuntos")
 
     answers = StreamField(
         [
@@ -114,6 +114,10 @@ class QuestionItem(ClusterableModel, Orderable):
         verbose_name="Alternativas",
     )
 
+    class Meta:
+        verbose_name = "Questão"
+        verbose_name_plural = "Questões"
+
     panels = [
         FieldPanel("question"),
         FieldPanel("subjects"),
@@ -127,8 +131,8 @@ class QuestionItem(ClusterableModel, Orderable):
                 return answer.value.get("answer")
 
 
-class QuestionList(Page):
-    parent_page_types = ["questions.QuestionListIndex"]
+class QuestionList(ClusterableModel):
+    title = models.CharField(max_length=255, verbose_name="Título")
     duration = models.IntegerField(verbose_name="Duração em minutos", default=120)
     instructions = RichTextField(
         max_length=255, verbose_name="Instruções", null=True, blank=True
@@ -144,12 +148,6 @@ class QuestionList(Page):
             user=request.user, questionsList=self, answers={}
         )
         return submission
-
-    content_panels = Page.content_panels + [
-        InlinePanel("questions", label="Questões"),
-        FieldPanel("duration"),
-        FieldPanel("instructions"),
-    ]
 
     class Meta:
         verbose_name = "Lista de Questões"
@@ -169,7 +167,7 @@ class QuestionList(Page):
     @property
     def get_instructions(self):
         if not self.instructions:
-            return self.get_parent().specific.default_instructions
+            return QuestionListIndex.objects.first().default_instructions
         return self.instructions
 
     @method_decorator(login_required)

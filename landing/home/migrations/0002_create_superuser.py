@@ -15,7 +15,7 @@ def remove_supersu(apps, schema_editor):
 
 class Migration(migrations.Migration):
     dependencies = [
-        ("home", "0002_create_supersu"),
+        ("home", "0001_initial"),
     ]
 
     operations = [
