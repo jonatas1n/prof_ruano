@@ -17,6 +17,7 @@ dj-database-url = "^2.2.0"
 gunicorn = "^23.0.0"
 whitenoise = {extras = ["brotli"], version = "^6.7.0"}
 django-allauth = "^65.0.2"
+wagtail-modeladmin = "^2.0.0"
 
 [tool.poetry.dev-dependencies]
 
