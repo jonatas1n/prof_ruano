@@ -24,6 +24,10 @@ class QuestionListIndex(RoutablePageMixin, Page):
     parent_page_types = ["home.LandingPage"]
     max_count = 1
 
+    class Meta:
+        verbose_name = "Índice de Listas de Questões"
+        verbose_name_plural = "Índices de Listas"
+
     default_instructions = RichTextField(
         max_length=255,
         verbose_name="Instruções padrões para a realização dos testes",
@@ -81,6 +85,10 @@ class QuestionItemSubject(TaggedItemBase):
     content_object = ParentalKey(
         "QuestionItem", related_name="tagged_items", on_delete=models.CASCADE
     )
+
+    class Meta:
+        verbose_name = "Assunto"
+        verbose_name_plural = "Assuntos"
 
     def save(self, *args, **kwargs):
         normalized_text = unicodedata.normalize("NFD", self.tag.name)
@@ -193,6 +201,10 @@ class QuestionListSubmission(models.Model):
 
     answers = models.JSONField(null=True, blank=True)
     result = models.JSONField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = "Submissão de Lista de Questões"
+        verbose_name_plural = "Submissões de Listas de Questões"
 
     def is_active(self):
         duration = self.question_list.duration

@@ -19,6 +19,9 @@ from django.utils.decorators import method_decorator
 class LandingPage(MetadataPageMixin, Page):
     max_count = 1
 
+    class Meta:
+        verbose_name = "Página Inicial"
+
     video_url = models.URLField(verbose_name="URL do vídeo", null=True, blank=True)
 
     popup = StreamField(
@@ -75,6 +78,10 @@ class HintPage(Page):
         FieldPanel("is_active"),
         FieldPanel("link"),
     ]
+
+    class Meta:
+        verbose_name = "Dica"
+        verbose_name_plural = "Dicas"
 
     def get_context(self, request):
         context = super().get_context(request)
