@@ -3,6 +3,7 @@ from wagtail.admin.panels import FieldPanel, InlinePanel
 from .models import QuestionList, QuestionItem
 from taggit.models import TaggedItemBase
 
+
 class QuestionItemInlinePanel(InlinePanel):
     model = QuestionItem
     panels = [
@@ -11,6 +12,7 @@ class QuestionItemInlinePanel(InlinePanel):
         FieldPanel("answers"),
     ]
 
+
 class QuestionListAdmin(ModelAdmin):
     model = QuestionList
     menu_label = "Listas"
@@ -18,12 +20,13 @@ class QuestionListAdmin(ModelAdmin):
     add_to_settings_menu = False
     exclude_from_explorer = True
     list_display = ("title", "duration")
-    search_fields = ("title")
+    search_fields = "title"
     panels = [
         FieldPanel("title"),
         FieldPanel("duration"),
         FieldPanel("instructions"),
         InlinePanel("questions"),
     ]
+
 
 modeladmin_register(QuestionListAdmin)

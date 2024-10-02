@@ -93,7 +93,9 @@ class QuestionItemSubject(TaggedItemBase):
 class QuestionItem(ClusterableModel, Orderable):
     question_list = ParentalKey("questions.QuestionList", related_name="questions")
     question = RichTextField(max_length=255, verbose_name="Enunciado da questão")
-    subjects = ClusterTaggableManager(through=QuestionItemSubject, blank=True, verbose_name="Assuntos")
+    subjects = ClusterTaggableManager(
+        through=QuestionItemSubject, blank=True, verbose_name="Assuntos"
+    )
 
     answers = StreamField(
         [
