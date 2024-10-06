@@ -3,7 +3,7 @@ from wagtail.models import Page, Orderable
 from modelcluster.fields import ParentalKey
 from wagtail.fields import RichTextField, StreamField
 from wagtail.admin.panels import FieldPanel, InlinePanel
-from wagtail.blocks import BooleanBlock, StructBlock, CharBlock
+from wagtail.blocks import BooleanBlock, StructBlock, CharBlock, RichTextBlock
 from taggit.models import TaggedItemBase
 from modelcluster.tags import ClusterTaggableManager
 from modelcluster.models import ClusterableModel
@@ -111,7 +111,7 @@ class QuestionItem(ClusterableModel, Orderable):
                 "option",
                 StructBlock(
                     [
-                        ("answer", CharBlock()),
+                        ("answer", RichTextBlock()),
                         ("is_correct", BooleanBlock(default=False, required=False)),
                     ]
                 ),
