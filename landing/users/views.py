@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from users.forms import RegisterForm
 from django.views import View
 from django.contrib import messages
-from home.models import LandingPage
 
 
 def login(request):
