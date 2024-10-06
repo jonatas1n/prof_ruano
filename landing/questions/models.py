@@ -212,9 +212,22 @@ class QuestionListSubmission(models.Model):
             not self.is_finished
             and self.created_at + timedelta(minutes=duration) > timezone.now()
         )
+    
+    @staticmethod
+    def finish_submissions(user):
+        expired_submissions = QuestionListSubmission.objects.filter(
+            user=user, is_finished=False
+        )
+
+        for submission in expired_submissions:
+            if not submission.is_active():
+                submission.is_finished = True
+                submission.finished_at = timezone.now()
+                submission.save()
 
     @staticmethod
     def get_active_submissions(user):
+        QuestionListSubmission.finish_submissions(user)
         user_submissions = QuestionListSubmission.objects.filter(
             user=user, is_finished=False
         )
