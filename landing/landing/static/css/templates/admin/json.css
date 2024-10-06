@@ -1,0 +1,5 @@
+.json__container {
+  display: grid;
+  gap: 1rem;
+  margin-top: 2.5rem;
+}

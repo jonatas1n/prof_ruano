@@ -11,7 +11,7 @@ from wagtail.contrib.routable_page.models import RoutablePageMixin, path
 
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect
 from django.utils import timezone
 
 from questions import views as questions_views

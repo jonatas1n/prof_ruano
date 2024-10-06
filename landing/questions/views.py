@@ -1,5 +1,9 @@
 from django.shortcuts import redirect, render
 from django.http import JsonResponse
+from django.shortcuts import render, redirect
+from django.utils import timezone
+from wagtail.fields import StreamValue
+import json
 
 from questions.util import format_time
 
@@ -99,4 +103,40 @@ def get_submission_data(request, submission_id):
             "time": format_time(time),
             "subjects": subjects,
         }
+    )
+
+def import_from_json_view(request):
+    from questions.forms import JsonUploadForm
+    from questions.models import QuestionList, QuestionItem
+
+    form = JsonUploadForm()
+
+    if request.method == "POST":
+            form = JsonUploadForm(request.POST, request.FILES)
+            if form.is_valid():
+                list_title = form.cleaned_data["list_title"]
+                json_file = form.cleaned_data["json_data"]
+                json_string = json_file.read().decode("utf-8")
+                json_data = json.loads(json_string)
+
+                new_list = QuestionList.objects.create(title=list_title)
+                for question_data in json_data:
+                    new_question_item = QuestionItem.objects.create(
+                        question=question_data["question"],
+                        question_list=new_list,
+                    )
+                    new_question_item.subjects.add(question_data["subject"])
+
+                    answers = [
+                        ("option", {"answer": answer["answer"], "is_correct": answer.get("is_correct", False)})
+                        for answer in question_data["answers"]
+                    ]
+                    new_question_item.answers = StreamValue(new_question_item.answers.stream_block, answers)
+                    new_question_item.save()
+
+                return redirect("/admin/questions/questionlist/")
+    return render(
+        request,
+        "wagtailadmin/json_processing.html",
+        {"form": form},
     )

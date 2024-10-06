@@ -39,3 +39,8 @@ class QuestionListForm(forms.ModelForm):
         submission.result = results
         submission.save()
         return submission
+
+
+class JsonUploadForm(forms.Form):
+    list_title = forms.CharField(label="Título da Lista")
+    json_data = forms.FileField()
