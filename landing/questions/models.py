@@ -90,6 +90,10 @@ class QuestionItemSubject(TaggedItemBase):
         verbose_name = "Assunto"
         verbose_name_plural = "Assuntos"
 
+    class Meta:
+        verbose_name = "Assunto"
+        verbose_name_plural = "Assuntos"
+
     def save(self, *args, **kwargs):
         normalized_text = unicodedata.normalize("NFD", self.tag.name)
         self.tag.name = "".join(

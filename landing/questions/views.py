@@ -112,14 +112,60 @@ def import_from_json_view(request):
     form = JsonUploadForm()
 
     if request.method == "POST":
-            form = JsonUploadForm(request.POST, request.FILES)
-            if form.is_valid():
-                list_title = form.cleaned_data["list_title"]
-                json_file = form.cleaned_data["json_data"]
+        form = JsonUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            list_title = form.cleaned_data["list_title"]
+            json_file = form.cleaned_data["json_data"]
+            json_string = json_file.read().decode("utf-8")
+            json_data = json.loads(json_string)
+
+            new_list = QuestionList.objects.create(title=list_title)
+            for question_data in json_data:
+                new_question_item = QuestionItem.objects.create(
+                    question=question_data["question"],
+                    question_list=new_list,
+                )
+                new_question_item.subjects.add(question_data["subject"])
+
+                answers = [
+                    {"type": "option", "value": {"answer": answer["answer"], "is_correct": answer.get("is_correct", False)}}
+                    for answer in question_data["answers"]
+                ]
+                new_question_item.answers = StreamValue(
+                    new_question_item.answers.stream_block, answers, is_lazy=True
+                )
+                new_question_item.save()
+
+            return redirect("/admin/questions/questionlist/")
+    return render(
+        request,
+        "wagtailadmin/json_processing.html",
+        {"form": form},
+    )
+
+def import_massive_view(request):
+    from questions.forms import JsonMassiveForm
+    from questions.models import QuestionList, QuestionItem
+
+    form = JsonMassiveForm()
+
+    if request.method != "POST":
+        return render(
+            request,
+            "wagtailadmin/json_processing.html",
+            {"form": form},
+        )
+    
+    form = JsonMassiveForm(request.POST, request.FILES)
+    if form.is_valid():
+        file_fails = []
+        json_files = request.FILES.getlist('json_data')
+        for json_file in json_files:
+            try:
                 json_string = json_file.read().decode("utf-8")
                 json_data = json.loads(json_string)
 
-                new_list = QuestionList.objects.create(title=list_title)
+                new_list = QuestionList.objects.create(title=f"Lista {json_file}")
                 for question_data in json_data:
                     new_question_item = QuestionItem.objects.create(
                         question=question_data["question"],
@@ -127,16 +173,17 @@ def import_from_json_view(request):
                     )
                     new_question_item.subjects.add(question_data["subject"])
 
+                    print(json_file, question_data['question'])
                     answers = [
-                        ("option", {"answer": answer["answer"], "is_correct": answer.get("is_correct", False)})
+                        {"type": "option", "value": {"answer": answer["answer"], "is_correct": answer.get("is_correct", False)}}
                         for answer in question_data["answers"]
                     ]
-                    new_question_item.answers = StreamValue(new_question_item.answers.stream_block, answers)
+                    new_question_item.answers = StreamValue(
+                        new_question_item.answers.stream_block, answers, is_lazy=True
+                    )
                     new_question_item.save()
+            except Exception as e:
+                file_fails.append(json_file)
+                print(e)
 
-                return redirect("/admin/questions/questionlist/")
-    return render(
-        request,
-        "wagtailadmin/json_processing.html",
-        {"form": form},
-    )
+        return redirect("/admin/questions/questionlist/")

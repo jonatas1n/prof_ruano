@@ -44,3 +44,6 @@ class QuestionListForm(forms.ModelForm):
 class JsonUploadForm(forms.Form):
     list_title = forms.CharField(label="Título da Lista")
     json_data = forms.FileField()
+
+class JsonMassiveForm(forms.Form):
+    json_data = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}), label='Arquivos JSON' )
