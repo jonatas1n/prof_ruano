@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static i18n wagtailcore_tags wagtailimages_tags %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/templates/questions/question_test.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'js/components/counter.css' %}">
+
+<div id="test" class="container">
+    <div class="test__header">
+        <h1 class="test__title">{{ test.title }}</h1>
+        <div class="counter" data-duration="{{ test.duration }}" data-start="{{test.created_at}}">
+            <div class="counter__text">Tempo restante: </div>
+            <div class="counter__display">00:00:00</div>
+        </div>
+    </div>
+
+    <div class="test__content">
+        <div class="test__instructions">
+            {{ test.instructions|richtext }}
+        </div>
+
+        {{ errors }}
+
+        <form method="post" action="submit" class="test__questions">
+            {% csrf_token %}
+            <div class="questions__content">
+              {% for field in form %}
+                {% if forloop.counter != 1 %}
+                  <div class="question">
+                      <div class="question__title">{{ forloop.counter0 }}. {{ field.label.label|richtext }}</div>
+                      <div class="question__subjects">
+                        {% for subject in field.label.subjects %}
+                          <div class="question__subject">{{ subject }}</div>
+                        {% endfor %}
+                      </div>
+                      <div class="question__options">
+                        {% for option in field %}
+                          <label class="question__option" for="{{ option.id_for_label }}">
+                            <input type="radio" id="{{ option.id_for_label }}" name="{{ field.name }}" value="{{ option.choice_label.answer }}">
+                            {{ option.choice_label.answer|richtext }}
+                          </label>
+                        {% endfor %}
+                      </div>
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </div>
+            <button type="submit">Finalizar Lista</button>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript" src="{% static 'js/components/counter.js'%}"></script>
+<script>
+    startCounter({{remaining_time}})
+</script>
+
+{% endblock %}

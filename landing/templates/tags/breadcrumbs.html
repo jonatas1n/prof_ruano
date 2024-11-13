@@ -1,0 +1,20 @@
+{% load wagtailcore_tags %}
+
+{% if ancestors %}
+  <div class="container">
+    <ul class="breadcrumb">
+      {% for ancestor in ancestors %}
+        {% if forloop.last %}
+          {% if ancestor.specific.campaign_name %}
+            <li aria-current="page">{{ ancestor.specific.campaign_name  }}</li>
+          {% else %}
+            <li aria-current="page">{{ ancestor }}</li>
+          {% endif %}
+        {% else %}
+          <li><a href="{% pageurl ancestor %}">{% if forloop.first %}Home{% else %}{{ ancestor }}{% endif %}</a>
+            /
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}

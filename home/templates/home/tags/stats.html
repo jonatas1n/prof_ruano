@@ -1,0 +1,59 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/templates/home/stats.css' %}">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+
+<div class="stats fade-up">
+    <div class="stats__title fade-left">
+        Estatísticas
+    </div>
+    {% if submissions %}
+        <div class="stats__board">
+            <div class="stats__item lists">
+                <div class="stats__item__title">Suas últimas listas</div>
+                <ul class="lists__content">
+                    {% for list in submissions %}
+                        <li class="list" onclick="markList('{{list.id}}')" id="list-item-{{ list.id }}" data-list-id="{{ list.id }}">
+                            <div class="list__date">{{list.question_list.title}}</div>
+                            <div class="list__grade"><small>{{ list.created_at|date:"d/m, H\hm" }}</small> | 28/30</div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="stats__item time">
+                <div class="stats__item__title">Tempo médio</div>
+                <div class="time__content">
+                    <div class="time__value">{{ average_time }}</div>
+                    <div class="time__hide"></div>
+                </div>
+            </div>
+            <div class="stats__item grade">
+                <div class="stats__item__title">% de acertos</div>
+                <div class="grade__content">
+                    <div class="grade__value">{{ corrects }}</div>
+                    <div class="grade__hide"></div>
+                </div>
+            </div>
+            <div class="stats__item subjects">
+                <div class="stats__item__title">Assuntos mais errados</div>
+                <ol class="subjects__content">
+                    {% for subject in subjects %}
+                        <li class="subject">{{ subject }}</li>
+                    {% endfor %}
+                    {% if not subjects %}
+                        <p class="no__subjects">Não há questões erradas ou os assuntos não foram definidos.</p>
+                        <div class="subjects__hide"></div>
+                    {% endif %}
+                </ol>
+            </div>
+        </div>
+    {% else %}
+        <div class="no-items">
+            <h2>Você ainda não realizou nenhuma lista.</h2>
+            <h3></h3>
+        </div>
+    {% endif %}
+</div>
+
+<script src="{% static 'js/tags/stats.js' %}"></script>

@@ -1,0 +1,66 @@
+{% load static wagtailcore_tags wagtailuserbar %}
+
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    {% block meta_tag %}
+        <title>
+            {% block title %}
+                {% if self.campaign_name %}
+                    {{ self.campaign_name }}
+                {% else %}
+                    {% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}
+                {% endif %}
+            {% endblock %}
+            {% block title_suffix %}
+                {% with self.get_site.site_name as site_name %}
+                    {% if site_name %}- {{ site_name }}{% endif %}
+                {% endwith %}
+            {% endblock %}
+        </title>
+        <meta name="description" content="{{ page.search_description }}" />
+    {% endblock %}
+
+		{% if page.canonical_url %}
+        <link rel="canonical" href="{{ page.canonical_url }}"/>
+    {% endif %}
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
+    {# Global stylesheets #}
+    {% block extra_css %}
+    {# Override this in templates to add extra stylesheets #}
+    {% endblock %}
+
+    <script src="https://kit.fontawesome.com/6242a3df73.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="{% block body_class %}{% endblock %}">
+    {% wagtailuserbar %}
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/variables.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/elements.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
+
+    <div class="main">
+        {% include 'header.html' %}
+
+        {% block content %}{% endblock %}
+        <div class="footer--normal">
+            {% include 'footer.html' %}
+        </div>
+    </div>
+
+    {% block extra_js %}
+    {% endblock %}
+</body>
+
+</html>

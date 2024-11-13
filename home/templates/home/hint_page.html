@@ -1,0 +1,30 @@
+{% extends "base.html" %} {% load static i18n wagtailcore_tags wagtailimages_tags wagtailmetadata_tags %} {% block content %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/templates/home/hint_page.css' %}" />
+
+<main id="hint" class="container">
+  <h3 class="hint__title">{{page.title}}</h3>
+  <div class="hint__content">
+    {% if page.link %}
+      <div class="hint__video">
+        <iframe src="{{ page.link }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    {% endif %}
+    <div class="hint__sidebar">
+      <div class="hint__description">
+        <h4>{{page.title}}</h4>
+        {{ page.description|richtext }}
+      </div>
+      <div class="hint__buttons">
+        {% if prev %}
+          <a href="/{{ prev.slug }}" class="hint__button previous"><i class="fas fa-arrow-left"></i></a>
+        {% endif %}
+        {% if next %}
+          <a href="/{{ next.slug }}" class="hint__button">Próximo Bizu</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</main>
+
+{% endblock %}

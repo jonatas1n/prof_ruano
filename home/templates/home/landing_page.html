@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static i18n wagtailcore_tags wagtailimages_tags wagtailmetadata_tags stats %}
+
+{% block meta_tag %}
+    {% meta_tags %}
+{% endblock %}
+
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/templates/home/home.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/components/modal.css' %}">
+
+<main class="container">
+    {% if active_list %}
+        <h3>Você está realizando a lista <a href="/listas/{{active_list.id}}">{{ active_list.title }}</a></h3>
+    {% endif %}
+    {% if hints or lists %}
+        <div class="menu-top">
+            {% if lists %}
+                <a class="menu-top__item" href="{{lists_slug}}">
+                    <button>
+                        Praticar as Listas
+                    </button>
+                </a>
+            {% endif %}
+            {% if hints %}
+                <a class="menu-top__item" href="javascript:openModal('#hint__modal')">
+                    <button>
+                        Bizus para prova
+                    </button>
+                </a>
+            {% endif %}
+        </div>
+    {% endif %}
+
+{% stats user=user %}
+</main>
+
+<div class="modal" id="hint__modal">
+    <div class="modal__backdrop"></div>
+    <div class="modal__container">
+        <div class="modal__content">
+            <div class="modal__header">
+                <h3 class="modal__title">Bizus para prova</h3>
+                <button class="modal__close" onclick="closeModal('#hint__modal')">
+                    <i class="fas fa-times fa-xl"></i>
+                </button>
+            </div>
+            <div class="modal__list">
+                {% for hint in hints %}
+                    <a href="{{ hint.slug }}" class="modal__item">
+                        {{ hint.title }}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="{% static 'js/components/modal.js'%}"></script>
+
+{% endblock %}
