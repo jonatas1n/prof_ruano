@@ -18,6 +18,7 @@ gunicorn = "^23.0.0"
 whitenoise = {extras = ["brotli"], version = "^6.7.0"}
 django-allauth = "^65.0.2"
 wagtail-modeladmin = "^2.0.0"
+python-dotenv = "^1.0.1"
 
 [tool.poetry.dev-dependencies]
 
