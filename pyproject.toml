@@ -19,6 +19,7 @@ whitenoise = {extras = ["brotli"], version = "^6.7.0"}
 django-allauth = "^65.0.2"
 wagtail-modeladmin = "^2.0.0"
 python-dotenv = "^1.0.1"
+psycopg2-binary = "^2.9.10"
 
 [tool.poetry.dev-dependencies]
 
