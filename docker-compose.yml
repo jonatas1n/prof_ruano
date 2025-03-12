@@ -1,0 +1,42 @@
+services:
+
+  landing_server:
+    environment:
+      - PYTHONUNBUFFERED=1
+    env_file:
+      - variables.env
+    build:
+      context: ./
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/landing
+      - landing:/tmp/landing_db
+      - media:/landing/media
+    container_name: landing_server
+    depends_on:
+      - landing_db
+    entrypoint: ["/bin/bash", "run.sh"]
+
+  landing_db:
+    env_file:
+      - variables.env
+    image: postgres:13.1
+    healthcheck:
+      test: ["CMD", "pg_isready", "-q", "-d", "postgres", "-U", "root"]
+      interval: 10s
+      timeout: 45s
+      retries: 10
+    expose:
+      - "5656"
+    volumes:
+      - backups:/var/lib/postgresql/data
+    container_name: landing_db
+    command: -p 5656
+    ports:
+      - "5656:5656"
+
+volumes:
+  landing:
+  media:
+  backups:
