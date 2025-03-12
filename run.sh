@@ -7,5 +7,5 @@ python manage.py findstatic .
 python manage.py collectstatic --noinput
 poetry install
 poetry add gunicorn
-gunicorn landing.wsgi:application --bind 0.0.0.0:8000
-# python manage.py runserver 0.0.0.0:8000
+# gunicorn landing.wsgi:application --bind 0.0.0.0:8000
+python manage.py runserver 0.0.0.0:8000

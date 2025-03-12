@@ -27,7 +27,6 @@ class QuestionListForm(forms.ModelForm):
 
     def save(self, submission_id=None):
         submission = QuestionListSubmission.objects.get(pk=submission_id)
-        print(self.cleaned_data)
         submission.answers = {
             field: self.cleaned_data[field]
             for field in self.cleaned_data

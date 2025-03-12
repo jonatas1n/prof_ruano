@@ -10,8 +10,8 @@ from wagtail.contrib.sitemaps.views import sitemap
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path("django-admin/", admin.site.urls),
     path("admin/", include(wagtailadmin_urls)),
+    path("django-admin/", admin.site.urls),
     path("documents/", include(wagtaildocs_urls)),
     path("auth/", include("users.urls")),
     path("sitemap.xml", sitemap),
